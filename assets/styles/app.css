@@ -12,3 +12,23 @@ body {
     padding: 0 0.2rem;
     transition: color 0.2s ease;
   }
+
+  .star-container {
+    font-size: 2.5rem;
+    cursor: pointer;
+    user-select: none;
+    color: #ccc; /* couleur par défaut */
+  }
+
+.star {
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.star:hover {
+  transform: scale(1.1);
+}
+
+.star-filled {
+  color: gold;
+}

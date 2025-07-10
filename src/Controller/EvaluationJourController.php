@@ -42,9 +42,8 @@ final class EvaluationJourController extends AbstractController
             }
     
         }
-            return $this->render('evaluation_jour/index.html.twig', [
-                'form' => $form->createView(),
-            ]);
-
+        return $this->render('evaluation_jour/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

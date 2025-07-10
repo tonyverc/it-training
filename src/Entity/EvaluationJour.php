@@ -22,8 +22,8 @@ class EvaluationJour
     #[ORM\Column(length: 255)]
     private ?string $formation = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $satisfaction = null;
+    #[ORM\Column]
+    private ?int $satisfaction = null;
 
     #[ORM\Column]
     private ?int $clarte = null;
@@ -31,7 +31,8 @@ class EvaluationJour
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $difficultes = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $suggestions = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -66,12 +67,12 @@ class EvaluationJour
         return $this;
     }
 
-    public function getSatisfaction(): ?string
+    public function getSatisfaction(): ?int
     {
         return $this->satisfaction;
     }
 
-    public function setSatisfaction(string $satisfaction): static
+    public function setSatisfaction(int $satisfaction): static
     {
         $this->satisfaction = $satisfaction;
 
@@ -95,7 +96,7 @@ class EvaluationJour
         return $this->difficultes;
     }
 
-    public function setDifficultes(?string $difficultes): static
+    public function setDifficultes(string $difficultes): static
     {
         $this->difficultes = $difficultes;
 
@@ -107,7 +108,7 @@ class EvaluationJour
         return $this->suggestions;
     }
 
-    public function setSuggestions(?string $suggestions): static
+    public function setSuggestions(string $suggestions): static
     {
         $this->suggestions = $suggestions;
 

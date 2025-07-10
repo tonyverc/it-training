@@ -5,6 +5,10 @@ export default class extends Controller {
 
   connect() {
     this.renderStars();
+
+    // remplir les étoiles si une valeur est déjà enregistrée
+    const currentValue = parseInt(this.inputTarget.value || 0);
+    this.updateStars(currentValue);
   }
 
   renderStars() {
@@ -17,6 +21,14 @@ export default class extends Controller {
       star.dataset.value = i;
       star.classList.add('star');
       star.addEventListener('click', () => this.selectStar(i));
+      star.classList.add('star');
+      star.innerHTML = '☆';
+
+      star.addEventListener('click', () => {
+        this.inputTarget.value = i;
+        this.updateStars(i);
+      });
+
       container.appendChild(star);
     }
 
@@ -28,9 +40,18 @@ export default class extends Controller {
     this.updateStars(value);
   }
 
+  // Met à jour l'affichage des étoiles en fonction de la valeur sélectionnée
+  // et ajoute la classe 'star-filled' pour les étoiles remplies
   updateStars(value) {
-    this.element.querySelectorAll('.star').forEach((star, index) => {
-      star.textContent = index < value ? '★' : '☆';
+    const stars = this.element.querySelectorAll('.star');
+    stars.forEach((star, index) => {
+      if (index < value) {
+        star.innerHTML = '★';
+        star.classList.add('star-filled');
+      } else {
+        star.innerHTML = '☆';
+        star.classList.remove('star-filled');
+      }
     });
   }
 }
