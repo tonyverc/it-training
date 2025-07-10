@@ -1,38 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Évaluation Journalière{% endblock %}
+{% block title %}Évaluation Journalière
+{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">Évaluation du jour</h1>
+	<h1 class="text-center">Évaluation du jour</h1>
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">{{ message }}</div>
-    {% endfor %}
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-warning">{{ message }}</div>
-    {% endfor %}
+<div data-controller="form" data-form-target="form feedback">
+    <div data-form-target="feedback"></div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                {{ form_start(form) }}
+    <form method="post" action="{{ path('app_evaluation_jour') }}"
+          data-action="submit->form#submit"
+          data-form-target="form">
 
-                {{ form_row(form.stagiaire) }}
-                {{ form_row(form.formation) }}
+        {{ form_row(form.stagiaire) }}
+        {{ form_row(form.formation) }}
 
-                <div class="mb-3" data-controller="stars" data-stars-target="input">
-                    <label class="form-label">Satisfaction</label>
-                    <input type="hidden" id="evaluation_jour_satisfaction" name="evaluation_jour[satisfaction]" value="3">
-                    {{ form_widget(form.satisfaction) }}
-                </div>
-
-                {{ form_row(form.clarte) }}
-                {{ form_row(form.difficultes) }}
-                {{ form_row(form.suggestions) }}
-                {{ form_row(form.save) }}
-
-                {{ form_end(form) }}
+        <div class="mb-3" data-controller="stars">
+            <label class="form-label">Satisfaction</label>
+            <div data-stars-target="stars">
+                {% for i in 1..5 %}
+                    <span class="star" data-action="click->stars#selectStar" data-value="{{ i }}">☆</span>
+                {% endfor %}
             </div>
+            {{ form_widget(form.satisfaction, { attr: { 'data-stars-target': 'input' } }) }}
         </div>
-    </div>
+
+        <div class="mb-3" data-controller="stars">
+            <label class="form-label">Clarté des Explications</label>
+            <div data-stars-target="stars">
+                {% for i in 1..5 %}
+                    <span class="star" data-action="click->stars#selectStar" data-value="{{ i }}">☆</span>
+                {% endfor %}
+            </div>
+            {{ form_widget(form.clarte, { attr: { 'data-stars-target': 'input' } }) }}
+        </div>
+
+        {{ form_row(form.difficultes) }}
+        {{ form_row(form.suggestions) }}
+        {{ form_row(form.save) }}
+
+    </form>
+</div>
+
 {% endblock %}
