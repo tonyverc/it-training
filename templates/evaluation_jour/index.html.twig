@@ -4,42 +4,106 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="bg-red-500">Évaluation du jour</h1>
+	<h1 class="text-center text-2xl font-bold text-white py-3">Évaluation Quotidienne - IT-TRAINING</h1>
 
-	<div data-controller="form" data-form-target="form feedback">
+	<div data-controller="form" data-form-target="form feedback" class="max-w-2xl mx-auto mt-10">
 		<div data-form-target="feedback"></div>
 
-		<form method="post" action="{{ path('app_evaluation_jour') }}" data-action="submit->form#submit" data-form-target="form">
+		{{ form_start(form, {
+        attr: {
+            class: 'space-y-8',
+            'data-action': 'submit->form#submit',
+            'data-form-target': 'form'
+        }
+    }) }}
 
-			{{ form_row(form.stagiaire) }}
-			{{ form_row(form.formation) }}
+		<div class="relative z-0 w-full group">
+			{{ form_widget(form.stagiaire, {
+                attr: {
+                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    placeholder: ' '
+                }
+            }) }}
+			<label for="{{ form.stagiaire.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+				Stagiaire
+			</label>
+			{{ form_errors(form.stagiaire) }}
+		</div>
 
-			<div data-controller="stars">
-				<label>Satisfaction</label>
-				<div data-stars-target="stars">
+		<div class="relative z-0 w-full group">
+			{{ form_widget(form.formation, {
+                attr: {
+                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    placeholder: ' '
+                }
+            }) }}
+			<label for="{{ form.formation.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+				Formation
+			</label>
+			{{ form_errors(form.formation) }}
+		</div>
+
+		{# bloc stars.twig.html #}
+		<div data-controller="stars">
+			<div data-stars-target="group">
+				<label class="block text-white mb-2">Satisfaction</label>
+				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
-						<span class="star" data-action="click->stars#selectStar" data-value="{{ i }}">☆</span>
+						<span class="star text-2xl text-gray-300 hover:text-yellow-400 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
 					{% endfor %}
 				</div>
-				{{ form_widget(form.satisfaction, { attr: { 'data-stars-target': 'input' } }) }}
+				{{ form_widget(form.satisfaction, {
+      attr: { 'data-stars-target': 'input', class: 'hidden' }
+    }) }}
 			</div>
 
-			<div data-controller="stars">
-				<label>Clarté des Explications</label>
-				<div data-stars-target="stars">
+			<div data-stars-target="group">
+				<label class="block text-white mb-2">Clarté des explications</label>
+				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
-						<span class="star" data-action="click->stars#selectStar" data-value="{{ i }}">☆</span>
+						<span class="star text-2xl text-gray-300 hover:text-yellow-400 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
 					{% endfor %}
 				</div>
-				{{ form_widget(form.clarte, { attr: { 'data-stars-target': 'input' } }) }}
+				{{ form_widget(form.clarte, {
+      attr: { 'data-stars-target': 'input', class: 'hidden' }
+    }) }}
 			</div>
+		</div>
 
-			{{ form_row(form.difficultes) }}
-			{{ form_row(form.suggestions) }}
-			{{ form_row(form.save) }}
+		<div class="relative z-0 w-full group">
+			{{ form_widget(form.difficultes, {
+                attr: {
+                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    placeholder: ' '
+                }
+            }) }}
+			<label for="{{ form.difficultes.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+				Difficultés rencontrées
+			</label>
+			{{ form_errors(form.difficultes) }}
+		</div>
 
-		</form>
+		<div class="relative z-0 w-full group">
+			{{ form_widget(form.suggestions, {
+                attr: {
+                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    placeholder: ' '
+                }
+            }) }}
+			<label for="{{ form.suggestions.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+				Suggestions
+			</label>
+			{{ form_errors(form.suggestions) }}
+		</div>
+
+		<div>
+			{{ form_widget(form.save, {
+                attr: {
+                    class: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
+                }
+            }) }}
+		</div>
+
+		{{ form_end(form) }}
 	</div>
-
-
 {% endblock %}

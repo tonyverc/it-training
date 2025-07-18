@@ -1,5 +1,10 @@
-body {
-    background-color: lightgray;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import "tailwindcss";
+@import "flowbite";
+
+/* règles CSS personnalisées */
+body {
+    background-color: rgb(15, 15, 15);
+}

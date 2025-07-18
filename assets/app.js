@@ -7,3 +7,14 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import 'flowbite';
+
+import { Application } from '@hotwired/stimulus'
+import { definitionsFromContext } from '@hotwired/stimulus-webpack-helpers'
+
+// Démarrer Stimulus
+const application = Application.start()
+
+// Charger automatiquement tous les contrôleurs de /controllers
+const context = require.context('./controllers', true, /\.js$/)
+application.load(definitionsFromContext(context))

@@ -20,17 +20,17 @@ class EvaluationJourType extends AbstractType
         $builder
             ->add('stagiaire')
             ->add('formation')
-            ->add('satisfaction', HiddenType::class,[
-                'required'=>true,
+            ->add('satisfaction', HiddenType::class, [
+                'required' => true,
             ])
-            ->add('clarte', HiddenType::class,[
-                'required'=>true,
+            ->add('clarte', HiddenType::class, [
+                'required' => true,
             ])
-            ->add('difficultes', TextareaType::class,[
-                'required'=>true,
+            ->add('difficultes', TextareaType::class, [
+                'required' => true,
             ])
-            ->add('suggestions', TextareaType::class,[
-                'required'=>true,
+            ->add('suggestions', TextareaType::class, [
+                'required' => true,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Envoyer l\'évaluation',
@@ -38,10 +38,13 @@ class EvaluationJourType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
-        // $resolver->setDefaults([
-        //     'data_class' => EvaluationJour::class,
-        // ]);
+        $resolver->setDefaults([
+            'data_class' => EvaluationJour::class,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'evaluation_jour',  // ce nom doit être EXACTEMENT le même que dans ton twig
+        ]);
     }
 }
