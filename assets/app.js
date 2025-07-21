@@ -9,6 +9,7 @@
 import './styles/app.css';
 import 'flowbite';
 
+
 import { Application } from '@hotwired/stimulus'
 import { definitionsFromContext } from '@hotwired/stimulus-webpack-helpers'
 
@@ -18,3 +19,6 @@ const application = Application.start()
 // Charger automatiquement tous les contrôleurs de /controllers
 const context = require.context('./controllers', true, /\.js$/)
 application.load(definitionsFromContext(context))
+
+
+

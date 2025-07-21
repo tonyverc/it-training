@@ -1,10 +1,11 @@
+@import "flowbite";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "flowbite";
 
 /* règles CSS personnalisées */
-body {
-    background-color: rgb(15, 15, 15);
-}
+ body {
+    background-color: rgba(80, 212, 19, 0.329);
+} 
+

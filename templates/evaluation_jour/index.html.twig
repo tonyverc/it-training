@@ -6,7 +6,7 @@
 {% block body %}
 	<h1 class="text-center text-2xl font-bold text-white py-3">Évaluation Quotidienne - IT-TRAINING</h1>
 
-	<div data-controller="form" data-form-target="form feedback" class="max-w-2xl mx-auto mt-10">
+	<div data-controller="form" data-form-target="feedback" class="max-w-2xl mx-auto mt-10">
 		<div data-form-target="feedback"></div>
 
 		{{ form_start(form, {
@@ -106,4 +106,5 @@
 
 		{{ form_end(form) }}
 	</div>
+	
 {% endblock %}

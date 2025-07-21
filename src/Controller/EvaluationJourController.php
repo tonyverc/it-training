@@ -33,43 +33,29 @@ final class EvaluationJourController extends AbstractController
                 'stagiaire' => $evaluation->getStagiaire(),
                 'date' => $today,
             ]);
-            // Vérification si une évaluation existe déjà pour le stagiaire et la date actuelle
-            if ($existing) {
-                $this->addFlash('error', 'Vous avez déjà soumis une évaluation pour aujourd\'hui.');
-            } else {
-                $em->persist($evaluation);
-                $em->flush();
-                $this->addFlash('success', 'Évaluation du jour enregistrée avec succès.');
-            }
-        }
-        // Si la requête est AJAX, on retourne une réponse JSON
-        if ($request->isXmlHttpRequest()) {
-            if ($form->isSubmitted() && $form->isValid()) {
-                $existing = $em->getRepository(EvaluationJour::class)->findOneBy([
-                    'stagiaire' => $evaluation->getStagiaire(),
-                    'date' => $today,
-                ]);
 
-                if ($existing) {
-                    return $this->json([
-                        'success' => false,
-                        'message' => 'Vous avez déjà soumis une évaluation pour aujourd\'hui.'
-                    ]);
+            if ($existing) {
+                $message = 'Vous avez déjà soumis une évaluation pour aujourd\'hui.';
+
+                if ($request->isXmlHttpRequest()) {
+                    return $this->json(['success' => false, 'message' => $message]);
                 }
 
-                $em->persist($evaluation);
-                $em->flush();
-
-                return $this->json([
-                    'success' => true,
-                    'message' => 'Évaluation enregistrée avec succès.'
-                ]);
+                $this->addFlash('error', $message);
+                return $this->redirectToRoute('app_evaluation_jour');
             }
 
-            return $this->json([
-                'success' => false,
-                'message' => 'Formulaire invalide. Vérifiez les champs.'
-            ]);
+            $em->persist($evaluation);
+            $em->flush();
+
+            $message = 'Évaluation enregistrée avec succès.';
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['success' => true, 'message' => $message]);
+            }
+
+            $this->addFlash('success', $message);
+            return $this->redirectToRoute('app_evaluation_jour');
         }
 
         return $this->render('evaluation_jour/index.html.twig', [

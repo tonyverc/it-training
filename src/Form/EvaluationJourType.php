@@ -44,7 +44,7 @@ class EvaluationJourType extends AbstractType
             'data_class' => EvaluationJour::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id'   => 'evaluation_jour',  // ce nom doit être EXACTEMENT le même que dans ton twig
+            'csrf_token_id'   => 'evaluation_jour',  
         ]);
     }
 }
