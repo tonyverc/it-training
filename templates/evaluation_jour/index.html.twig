@@ -4,9 +4,13 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="text-center text-2xl font-bold text-white py-3">Évaluation Quotidienne - IT-TRAINING</h1>
+	<div class="w-full max-w-xs mx-auto">
+		<img src="{{ asset('images/Logo_it-Traning_Noir.svg')}}" alt="Logo IT-TRAINING">
+	</div>
 
-	<div data-controller="form" data-form-target="feedback" class="max-w-2xl mx-auto mt-10">
+	<h1 class="text-center text-2xl font-bold text-black py-3">Évaluation Quotidienne - IT-TRAINING</h1>
+
+	<div data-controller="form" data-form-target="feedback" class="max-w-xl mx-auto mt-10 text-xl ">
 		<div data-form-target="feedback"></div>
 
 		{{ form_start(form, {
@@ -17,39 +21,40 @@
         }
     }) }}
 
-		<div class="relative z-0 w-full group">
+		{# <div class="relative z-0 w-full group">
 			{{ form_widget(form.stagiaire, {
                 attr: {
-                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
                     placeholder: ' '
                 }
             }) }}
-			<label for="{{ form.stagiaire.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+			<label for="{{ form.stagiaire.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
 				Stagiaire
 			</label>
 			{{ form_errors(form.stagiaire) }}
-		</div>
+		</div> #}
 
-		<div class="relative z-0 w-full group">
+		{# <div class="relative z-0 w-full group">
 			{{ form_widget(form.formation, {
                 attr: {
-                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
                     placeholder: ' '
                 }
             }) }}
-			<label for="{{ form.formation.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+			<label for="{{ form.formation.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
 				Formation
 			</label>
 			{{ form_errors(form.formation) }}
-		</div>
+		</div> #}
 
 		{# bloc stars.twig.html #}
 		<div data-controller="stars">
 			<div data-stars-target="group">
-				<label class="block text-white mb-2">Satisfaction</label>
+				<label class="block text-black mb-2">Satisfaction</label>
 				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
-						<span class="star text-2xl text-gray-300 hover:text-yellow-400 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+
 					{% endfor %}
 				</div>
 				{{ form_widget(form.satisfaction, {
@@ -58,10 +63,10 @@
 			</div>
 
 			<div data-stars-target="group">
-				<label class="block text-white mb-2">Clarté des explications</label>
+				<label class="block text-black mb-2">Clarté des explications</label>
 				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
-						<span class="star text-2xl text-gray-300 hover:text-yellow-400 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
 					{% endfor %}
 				</div>
 				{{ form_widget(form.clarte, {
@@ -73,11 +78,11 @@
 		<div class="relative z-0 w-full group">
 			{{ form_widget(form.difficultes, {
                 attr: {
-                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    class: 'peer block py-2.5 px-0 w-full text-xl text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
                     placeholder: ' '
                 }
             }) }}
-			<label for="{{ form.difficultes.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+			<label for="{{ form.difficultes.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
 				Difficultés rencontrées
 			</label>
 			{{ form_errors(form.difficultes) }}
@@ -86,11 +91,11 @@
 		<div class="relative z-0 w-full group">
 			{{ form_widget(form.suggestions, {
                 attr: {
-                    class: 'peer block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600',
+                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
                     placeholder: ' '
                 }
             }) }}
-			<label for="{{ form.suggestions.vars.id }}" class="peer-focus:font-medium absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+			<label for="{{ form.suggestions.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
 				Suggestions
 			</label>
 			{{ form_errors(form.suggestions) }}
@@ -99,12 +104,12 @@
 		<div>
 			{{ form_widget(form.save, {
                 attr: {
-                    class: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
+                    class: 'text-[#112A46] bg-[#38DEB9] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer'
                 }
             }) }}
 		</div>
 
 		{{ form_end(form) }}
 	</div>
-	
+
 {% endblock %}

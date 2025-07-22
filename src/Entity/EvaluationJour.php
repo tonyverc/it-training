@@ -16,10 +16,10 @@ class EvaluationJour
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $stagiaire = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $formation = null;
 
     #[ORM\Column]
@@ -48,7 +48,7 @@ class EvaluationJour
         return $this->stagiaire;
     }
 
-    public function setStagiaire(string $stagiaire): static
+    public function setStagiaire(?string $stagiaire): static
     {
         $this->stagiaire = $stagiaire;
 
@@ -60,7 +60,7 @@ class EvaluationJour
         return $this->formation;
     }
 
-    public function setFormation(string $formation): static
+    public function setFormation(?string $formation): static
     {
         $this->formation = $formation;
 

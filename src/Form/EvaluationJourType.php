@@ -18,8 +18,8 @@ class EvaluationJourType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('stagiaire')
-            ->add('formation')
+            // ->add('stagiaire')
+            // ->add('formation')
             ->add('satisfaction', HiddenType::class, [
                 'required' => true,
             ])
