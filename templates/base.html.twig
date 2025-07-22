@@ -8,13 +8,24 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
-        {% block javascripts %}
+        {% block javascripts %}
+
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
 	<body>
-		{% form_theme form 'bootstrap_5_layout.html.twig' %}
-
-		{% block body %}{% endblock %}
+        <div  class="flex row min-h-[100vh]">
+            <div class="w-[320px] bg-[#0B1141] text-[#FFFE]">
+                {% include 'component/header.html.twig' %}
+            </div>
+            
+            <div class="p-1 !bg-white !text-black w-full">
+                {% block body %}{% endblock %}
+            </div>
+        
+        </div>
+        <div>
+            {% include 'component/footer.html.twig' %}
+        </div>
 	</body>
 </html>

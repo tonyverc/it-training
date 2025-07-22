@@ -1,0 +1,14 @@
+<header class="p-4">
+    <hgroup>
+        <h1 class="text-lg">IT-Training</h1>
+        <p class="text-sm text-[#38DEB9]">Systeme CRM</p>
+    </hgroup>
+
+    <nav class="flex flex-col gap-1 text-sm font-bold p-1">
+        <a class="rounded-full flex flex-row gap-2 items-center px-2 py-2 {% if app.request.get("_route") == "app_evaluation_jour" %} bg-white text-[#712F6F] {% else %} hover:bg-[#232C72] {% endif %}" href=""> <img src="https://placehold.co/24x24"><div>Tableau de bord</div></a>
+        <a class="rounded-full flex flex-row gap-2 items-center px-2 py-2 {% if app.request.get("_route") == "app_dashboard" %} bg-white text-[#712F6F] {% else %} hover:bg-[#232C72] {% endif %}" href=""> <img src="https://placehold.co/24x24"><div>Formateur</div></a>
+        <a class="rounded-full flex flex-row gap-2 items-center px-2 py-2 {% if app.request.get("_route") == "placeholder" %} bg-white text-[#712F6F] {% else %} hover:bg-[#232C72] {% endif %}" href=""> <img src="https://placehold.co/24x24"><div>Evaluation</div></a>
+        <a class="rounded-full flex flex-row gap-2 items-center px-2 py-2 {% if app.request.get("_route") == "placeholder" %} bg-white text-[#712F6F] {% else %} hover:bg-[#232C72] {% endif %}" href=""> <img src="https://placehold.co/24x24"><div>Formation en cours</div></a>
+        <a class="rounded-full flex flex-row gap-2 items-center px-2 py-2 {% if app.request.get("_route") == "placeholder" %} bg-white text-[#712F6F] {% else %} hover:bg-[#232C72] {% endif %}" href=""> <img src="https://placehold.co/24x24"><div>Mails</div></a>
+    </nav>
+</header>
