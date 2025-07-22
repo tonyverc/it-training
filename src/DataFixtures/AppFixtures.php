@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
         for ($i=0; $i < 50; $i++) { 
             $alerte = new AlerteQualite();
             $alerte->setType(mt_rand(0,1) ? "Evaluation quotidienne" : "Evaluation finale");
-            $alerte->setTitre( );
+            //$alerte->setTitre( );
 
         }
 
