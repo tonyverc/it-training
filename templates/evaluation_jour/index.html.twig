@@ -8,7 +8,7 @@
 		<img src="{{ asset('images/Logo_it-Traning_Noir.svg')}}" alt="Logo IT-TRAINING">
 	</div>
 
-	<h1 class="text-center text-2xl font-bold text-black py-3">Évaluation Quotidienne - IT-TRAINING</h1>
+	<h1 class="text-center text-2xl font-bold text-black py-2">Évaluation Quotidienne - IT-TRAINING</h1>
 
 	<div data-controller="form" data-form-target="feedback" class="max-w-xl mx-auto mt-10 text-xl ">
 		<div data-form-target="feedback"></div>
@@ -48,7 +48,7 @@
 		</div> #}
 
 		{# bloc stars.twig.html #}
-		<div data-controller="stars">
+		<div class="p-4 sm:p-0" data-controller="stars">
 			<div data-stars-target="group">
 				<label class="block text-black mb-2">Satisfaction</label>
 				<div class="flex gap-1 mb-2">
@@ -75,7 +75,7 @@
 			</div>
 		</div>
 
-		<div class="relative z-0 w-full group">
+		<div class="relative z-0 w-full group p-4 sm:p-0">
 			{{ form_widget(form.difficultes, {
                 attr: {
                     class: 'peer block py-2.5 px-0 w-full text-xl text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
@@ -88,10 +88,10 @@
 			{{ form_errors(form.difficultes) }}
 		</div>
 
-		<div class="relative z-0 w-full group">
+		<div class="relative z-0 w-full group p-4 sm:p-0">
 			{{ form_widget(form.suggestions, {
                 attr: {
-                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
+                    class: 'peer block py-2.5 px-0 w-full text-xl text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
                     placeholder: ' '
                 }
             }) }}
@@ -104,7 +104,7 @@
 		<div>
 			{{ form_widget(form.save, {
                 attr: {
-                    class: 'text-[#112A46] bg-[#38DEB9] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer'
+                    class: 'text-[#112A46] bg-[#38DEB9] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-48 px-5 py-2.5 text-center cursor-pointer mx-2 '
                 }
             }) }}
 		</div>
