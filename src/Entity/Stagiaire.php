@@ -10,12 +10,8 @@ use App\Entity\User;
 use App\Entity\AlerteQualite;
 
 #[ORM\Entity(repositoryClass: StagiaireRepository::class)]
-class Stagiaire
+class Stagiaire extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
