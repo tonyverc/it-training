@@ -9,7 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 use App\Entity\Stagiaire;
-
+use App\Entity\EvaluationJour;
+use App\Entity\Formation;
 
 class AppFixtures extends Fixture
 {
@@ -26,18 +27,37 @@ class AppFixtures extends Fixture
 
         $notesQualite = [];
 
-        for ($i=0; $i < 40; $i++) { 
-            $noteQualite = new NoteQualite();
+        // for ($i=0; $i < 40; $i++) { 
+        //     $noteQualite = new NoteQualite();
 
-            $noteQualite->setValeur(mt_rand(1,3));
-            $noteQualite->setTypeEvaluation(mt_rand(0,1) ? "Finale" : "Quotidienne");
-            $noteQualite->setQuestion(mt_rand(0,1) ? "Contenu de la formation" : "Satisfaction générale");
+        //     $noteQualite->setValeur(mt_rand(1,3));
+        //     $noteQualite->setTypeEvaluation(mt_rand(0,1) ? "Finale" : "Quotidienne");
+        //     $noteQualite->setQuestion(mt_rand(0,1) ? "Contenu de la formation" : "Satisfaction générale");
 
 
-            $manager->persist($stagiaire);
+        //     $manager->persist($stagiaire);
             
-            $stagiaires[] = $stagiaire;
-        }
+        //     $stagiaires[] = $stagiaire;
+        // }
+
+        $formations = [];
+
+        $formation = new Formation();
+        $formation->setNom("Développement Python");
+        $formation->setFicheFormation("Lorem ipsum");
+
+        $formations[] = $formation;
+
+        $manager->persist($formation);
+
+        $formation = new Formation();
+        $formation->setNom("Développement Java");
+        $formation->setFicheFormation("Lorem ipsum");
+
+        $formations[] = $formation;
+
+        $manager->persist($formation);
+
 
         $stagiaires = [];
         for ($i=0; $i < 40; $i++) { 
@@ -52,15 +72,67 @@ class AppFixtures extends Fixture
             $stagiaires[] = $stagiaire;
         }
 
-        for ($i=0; $i < count($stagiaires); $i++) { 
-            $alerte = new AlerteQualite();
-            $alert->setStagiaireId($stagiaire[mt_rand(0,count($stagiaires))]);
+        $evaluationsJour = [];
 
-            $alerte->setType(mt_rand(0,1) ? "Evaluation quotidienne" : "Evaluation finale");
-            $alert->setTitre(`Le stagiaire `
-                                . $alert->getStagiaireId()->getNom() . ` ` . $alert->getStagiaireId()->setNom()
-                                . 'a mis ');
+        for ($i=0; $i < 50 ; $i++) { 
+            $evaluationJour = new EvaluationJour();
 
+            $idStagiaire = $stagiaires[mt_rand(0,count($stagiaires) - 1)];
+
+            $evaluationJour->setStagiaire($idStagiaire);
+            $evaluationJour->setFormation($formations[mt_rand(0,count($formations) - 1)]);
+            $evaluationJour->setSatisfaction(mt_rand(0,5));
+            $evaluationJour->setClarte(mt_rand(0,5));
+            $evaluationJour->setDifficultes(mt_rand(0,1) ? null : $this->faker->paragraph());
+            $evaluationJour->setSuggestions(mt_rand(0,1) ? null : $this->faker->paragraph());
+
+            if($evaluationJour->getSatisfaction() < 4 || $evaluationJour->getClarte() < 4) {
+                
+                $messageTitre = "";
+                $messageDescription = "";
+
+                $alerte = new AlerteQualite();
+
+                $alerte->setStagiaire($idStagiaire);
+                $alerte->setEvaluationJour($evaluationJour);
+
+                if ($evaluationJour->getSatisfaction() < 4){
+                    $messageTitre = "Le stagiaire "
+                                . $alerte->getStagiaire()->getNom() . ` ` . $alerte->getStagiaire()->getNom()
+                                . 'a mis ' . $evaluationJour->getSatisfaction() . " comme satisfaction";
+                }
+                else if ($evaluationJour->getSatisfaction() < 4 && $evaluationJour->getClarte()){
+                    $messageTitre = "Le stagiaire "
+                                . $alerte->getStagiaire()->getNom() . ` ` . $alerte->getStagiaire()->getNom()
+                                . 'a mis ' . $evaluationJour->getSatisfaction() . " comme satisfaction" . " et "
+                                . $evaluationJour->getClarte() . " comme clarté";
+                }
+                else {
+                    $messageTitre = "Le stagiaire "
+                                . $alerte->getStagiaire()->getNom() . ` ` . $alerte->getStagiaire()->getNom()
+                                . 'a mis '
+                                . $evaluationJour->getClarte() . " comme clarté";
+                }
+
+                if($evaluationJour->getDifficultes()) {
+                    $messageDescription = $evaluationJour->getDifficultes();
+                }
+                else if ($evaluationJour->getDifficultes() || $evaluationJour->getSuggestions()) {
+                    $messageDescription = $evaluationJour->getDifficultes() . "<br/>" . $evaluationJour->getSuggestions();
+                }
+                else {
+                    $messageDescription = $evaluationJour->getSuggestions();
+                }
+
+                $evaluationJour->setAlerteQualite($alerte);
+
+                $alerte->setTitre($messageTitre);
+                $alerte->setDescription($messageDescription);
+                $alerte->setFormation($formations[mt_rand(0,count($formations) - 1)]);
+
+                $manager->persist($alerte);
+            }
+            $manager->persist($evaluationJour);
         }
 
 

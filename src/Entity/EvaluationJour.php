@@ -7,7 +7,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EvaluationJourRepository::class)]
-#[ORM\UniqueConstraint(fields: ['stagiaire','date'])]
 
 class EvaluationJour
 {
@@ -15,12 +14,6 @@ class EvaluationJour
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $stagiaire = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $formation = null;
 
     #[ORM\Column]
     private ?int $satisfaction = null;
@@ -32,39 +25,30 @@ class EvaluationJour
     private ?string $difficultes = null;
 
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $suggestions = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $date = null;
+
+    #[ORM\OneToOne(inversedBy: 'evaluationJour', cascade: ['persist', 'remove'])]
+    private ?AlerteQualite $alerte_qualite = null;
+
+    #[ORM\ManyToOne(inversedBy: 'evaluationsJour')]
+    private ?Stagiaire $stagiaire = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Formation $formation = null;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStagiaire(): ?string
-    {
-        return $this->stagiaire;
-    }
-
-    public function setStagiaire(string $stagiaire): static
-    {
-        $this->stagiaire = $stagiaire;
-
-        return $this;
-    }
-
-    public function getFormation(): ?string
-    {
-        return $this->formation;
-    }
-
-    public function setFormation(string $formation): static
-    {
-        $this->formation = $formation;
-
-        return $this;
     }
 
     public function getSatisfaction(): ?int
@@ -91,12 +75,12 @@ class EvaluationJour
         return $this;
     }
 
-    public function getDifficultes(): ?string
+    public function getDifficultes()
     {
         return $this->difficultes;
     }
 
-    public function setDifficultes(string $difficultes): static
+    public function setDifficultes($difficultes): static
     {
         $this->difficultes = $difficultes;
 
@@ -108,7 +92,7 @@ class EvaluationJour
         return $this->suggestions;
     }
 
-    public function setSuggestions(string $suggestions): static
+    public function setSuggestions($suggestions): static
     {
         $this->suggestions = $suggestions;
 
@@ -123,6 +107,42 @@ class EvaluationJour
     public function setDate(\DateTime $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getAlerteQualite(): ?AlerteQualite
+    {
+        return $this->alerte_qualite;
+    }
+
+    public function setAlerteQualite(?AlerteQualite $alerte_qualite): static
+    {
+        $this->alerte_qualite = $alerte_qualite;
+
+        return $this;
+    }
+
+    public function getStagiaire(): ?Stagiaire
+    {
+        return $this->stagiaire;
+    }
+
+    public function setStagiaire(?Stagiaire $id_stagiaire): static
+    {
+        $this->stagiaire = $id_stagiaire;
+
+        return $this;
+    }
+
+    public function getFormation(): ?Formation
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(?Formation $formation): static
+    {
+        $this->formation = $formation;
 
         return $this;
     }
