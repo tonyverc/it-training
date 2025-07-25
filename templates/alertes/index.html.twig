@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	<link rel="stylesheet" href="{{ asset('styles/alertes.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+	<style></style>
+
+
+	<div class="content-container">
+		<div class="boutons-categorie">
+                <button class="bouton-categorie active" onclick="changerDeCategorie()">Evaluation</button>
+			    <button class="bouton-categorie" onclick="changerDeCategorie()">Stagiaires</button>
+		</div>
+		<ul class="alertes">
+
+				{% for alerte in alertes %}
+					<li class="alerte">
+                    <div>
+                        <button>
+                            <div class="ligne"></div>
+                            <div class="ligne"></div>
+                        </button>
+                    </div>
+						<time datetime="">{{alerte.date|date('d/m/Y H:i')}}</time>
+						<h1 class="titre-alerte">{{alerte.titre}}</h1>
+						<p>Formation:
+							{{alerte.formation.nom}}</p>
+						<p>{{alerte.description}}</p>
+					</li>
+				{% endfor %}
+            
+		</ul>
+	</div>
+
+    {% block script %}
+
+    let switchCategorie;
+
+    function changerDeCategorie() {
+        if(!switchCategorie) {
+            document.querySelector(".bouton-categorie.active").classList.remove("active");
+            document.querySelectorAll(".bouton-categorie")[0].classList.add("active");
+            switchCategorie = true;
+        }
+        else {
+            document.querySelector(".bouton-categorie.active").classList.remove("active");
+            document.querySelectorAll(".bouton-categorie")[1].classList.add("active");
+
+            switchCategorie = false;
+        }
+    }
+
+{% endblock %}
+{% endblock %}

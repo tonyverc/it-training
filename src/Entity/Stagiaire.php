@@ -44,10 +44,17 @@ class Stagiaire
     #[ORM\OneToMany(targetEntity: EvaluationJour::class, mappedBy: 'id_stagiaire')]
     private Collection $evaluationsJour;
 
+    /**
+     * @var Collection<int, AlerteDecharge>
+     */
+    #[ORM\OneToMany(targetEntity: AlerteDecharge::class, mappedBy: 'stagiaire', orphanRemoval: true)]
+    private Collection $alertesDecharge;
+
     public function __construct()
     {
         $this->alerteQualites = new ArrayCollection();
         $this->evaluationsJour = new ArrayCollection();
+        $this->alertesDecharge = new ArrayCollection();
     }
 
     public function getNom(): ?string
@@ -162,4 +169,34 @@ class Stagiaire
 {
     return $this->nom; // ou autre champ : prénom, email, etc.
 }
+
+    /**
+     * @return Collection<int, AlerteDecharge>
+     */
+    public function getAlertesDecharge(): Collection
+    {
+        return $this->alertesDecharge;
+    }
+
+    public function addAlertesDecharge(AlerteDecharge $alertesDecharge): static
+    {
+        if (!$this->alertesDecharge->contains($alertesDecharge)) {
+            $this->alertesDecharge->add($alertesDecharge);
+            $alertesDecharge->setStagiaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlertesDecharge(AlerteDecharge $alertesDecharge): static
+    {
+        if ($this->alertesDecharge->removeElement($alertesDecharge)) {
+            // set the owning side to null (unless already changed)
+            if ($alertesDecharge->getStagiaire() === $this) {
+                $alertesDecharge->setStagiaire(null);
+            }
+        }
+
+        return $this;
+    }
 }
