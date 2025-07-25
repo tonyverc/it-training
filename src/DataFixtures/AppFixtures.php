@@ -81,8 +81,8 @@ class AppFixtures extends Fixture
 
             $evaluationJour->setStagiaire($idStagiaire);
             $evaluationJour->setFormation($formations[mt_rand(0,count($formations) - 1)]);
-            $evaluationJour->setSatisfaction(mt_rand(0,5));
-            $evaluationJour->setClarte(mt_rand(0,5));
+            $evaluationJour->setSatisfaction(mt_rand(1,5));
+            $evaluationJour->setClarte(mt_rand(1,5));
             $evaluationJour->setDifficultes(mt_rand(0,1) ? null : $this->faker->paragraph());
             $evaluationJour->setSuggestions(mt_rand(0,1) ? null : $this->faker->paragraph());
 
@@ -99,19 +99,19 @@ class AppFixtures extends Fixture
                 if ($evaluationJour->getSatisfaction() < 4){
                     $messageTitre = "Le stagiaire "
                                 . $alerte->getStagiaire()->getNom() . ` ` . $alerte->getStagiaire()->getNom()
-                                . 'a mis ' . $evaluationJour->getSatisfaction() . " comme satisfaction";
+                                . ' a mis une note ' . $evaluationJour->getSatisfaction() . " de satisfaction";
                 }
                 else if ($evaluationJour->getSatisfaction() < 4 && $evaluationJour->getClarte()){
                     $messageTitre = "Le stagiaire "
                                 . $alerte->getStagiaire()->getNom() . ` ` . $alerte->getStagiaire()->getNom()
-                                . 'a mis ' . $evaluationJour->getSatisfaction() . " comme satisfaction" . " et "
-                                . $evaluationJour->getClarte() . " comme clarté";
+                                . ' a mis une note ' . $evaluationJour->getSatisfaction() . " de satisfaction" . " et une note"
+                                . $evaluationJour->getClarte() . " de clarté";
                 }
                 else {
                     $messageTitre = "Le stagiaire "
                                 . $alerte->getStagiaire()->getNom() . ` ` . $alerte->getStagiaire()->getNom()
-                                . 'a mis '
-                                . $evaluationJour->getClarte() . " comme clarté";
+                                . ' a mis une note '
+                                . $evaluationJour->getClarte() . " de clarté";
                 }
 
                 if($evaluationJour->getDifficultes()) {

@@ -17,7 +17,7 @@
         {% for alerte in alertes %}
             <li class="alerte">
                 <time datetime="">{{alerte.date|date('d/m/Y H:i')}}</time>
-                <h1>{{alerte.titre}}</h1>
+                <h1 class="titre-alerte">{{alerte.titre}}</h1>
                 <p>Formation: {{alerte.formation.nom}}</p>
                 <p>{{alerte.description}}</p>
                 
