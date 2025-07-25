@@ -23,30 +23,30 @@
     }) }}
 
 		{# <div class="relative z-0 w-full group">
-									{{ form_widget(form.stagiaire, {
-						                attr: {
-						                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
-						                    placeholder: ' '
-						                }
-						            }) }}
-									<label for="{{ form.stagiaire.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-										Stagiaire
-									</label>
-									{{ form_errors(form.stagiaire) }}
-								</div> #}
+															{{ form_widget(form.stagiaire, {
+												                attr: {
+												                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
+												                    placeholder: ' '
+												                }
+												            }) }}
+															<label for="{{ form.stagiaire.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+																Stagiaire
+															</label>
+															{{ form_errors(form.stagiaire) }}
+														</div> #}
 
 		{# <div class="relative z-0 w-full group">
-									{{ form_widget(form.formation, {
-						                attr: {
-						                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
-						                    placeholder: ' '
-						                }
-						            }) }}
-									<label for="{{ form.formation.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-										Formation
-									</label>
-									{{ form_errors(form.formation) }}
-								</div> #}
+															{{ form_widget(form.formation, {
+												                attr: {
+												                    class: 'peer block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
+												                    placeholder: ' '
+												                }
+												            }) }}
+															<label for="{{ form.formation.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+																Formation
+															</label>
+															{{ form_errors(form.formation) }}
+														</div> #}
 
 		{# bloc stars.twig.html #}
 			<div class="p-4 sm:p-0" data-controller="stars"> <div data-stars-target="group">
@@ -108,21 +108,67 @@
       attr: { 'data-stars-target': 'input', class: 'hidden' }
     }) }}
 				</div>
+				<div>
+					<label class="block text-black mb-2">Recommanderais-tu cette formation à quelqu'un d'autre ?</label>
+					<div class="flex gap-4">
+						{% for choix in form.recommandation %}
+							<label class="flex items-center gap-2 cursor-pointer bg-white border border-gray-300 rounded-full px-4 py-2 hover:bg-[#38DEB9] transition-all">
+								{{ form_widget(choix) }}
+								{# {{ choix.vars.label }} #}
+							</label>
+						{% endfor %}
+					</div>
+					{{ form_errors(form.recommandation) }}
+				</div>
+
+				<div data-stars-target="group">
+					<h2 class="text-center">Formateur :</h2>
+					<label class="block text-black mb-2 mt-2">Pédagogie</label>
+					<div class="flex gap-1 mb-2">
+						{% for i in 1..5 %}
+							<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+						{% endfor %}
+					</div>
+					{{ form_widget(form.pedagogie, {
+	  attr: { 'data-stars-target': 'input', class: 'hidden' }
+	}) }}
+
+					<div data-stars-target="group">
+						<label class="block text-black mb-2 mt-2">Maitrise du domaine</label>
+						<div class="flex gap-1 mb-2">
+							{% for i in 1..5 %}
+								<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+							{% endfor %}
+						</div>
+						{{ form_widget(form.maitriseDuDomaine, {
+	  attr: { 'data-stars-target': 'input', class: 'hidden' }
+	}) }}
+
+						<div data-stars-target="group">
+							<label class="block text-black mb-2 mt-2">Disponibilité</label>
+							<div class="flex gap-1 mb-2">
+								{% for i in 1..5 %}
+									<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+								{% endfor %}
+							</div>
+							{{ form_widget(form.disponibilite, {
+	  attr: { 'data-stars-target': 'input', class: 'hidden' }
+	}) }}
 
 
-			</div>
-		</div>
+						</div>
+					</div>
 
 
-		<div>
-			{{ form_widget(form.save, {
+					<div>
+						{{ form_widget(form.save, {
                 attr: {
                     class: 'text-[#112A46] bg-[#38DEB9] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-48 px-5 py-2.5 text-center cursor-pointer mx-2 '
                 }
             }) }}
-		</div>
+					</div>
 
-		{{ form_end(form) }}
-	</div>
+					{{ form_end(form) }}
+				</div>
 
-{% endblock %}
+			{% endblock %}
