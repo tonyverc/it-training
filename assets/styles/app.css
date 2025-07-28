@@ -8,3 +8,15 @@
 body {
     background-color: rgb(15, 15, 15);
 }
+
+.pagination-sofiane
+{
+    box-sizing: border-box;
+    border-bottom: 1px black solid;
+}
+.pagination-sofiane-actif
+{
+    box-sizing: border-box;
+    border : 1px black solid;
+    border-bottom: none;
+}
