@@ -74,6 +74,13 @@ class AppFixtures extends Fixture
 
         $evaluationsJour = [];
 
+        for ($i=0; $i < 50; $i++) { 
+            $alerteDecharge = new AlerteDecharge();
+            $alerteDecharge->setFormation($formations[mt_rand(0,1) ? 0 : count($formations) - 1]);
+            $alerteDecharge->setStagiaire($stagiaires[mt_rand(0,1) ? 0 : count($stagiaires) - 1]);
+            $alerteDecharge->setContenu($this->faker->paragraph());
+        }
+
         for ($i=0; $i < 50 ; $i++) { 
             $evaluationJour = new EvaluationJour();
 

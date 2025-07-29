@@ -8,8 +8,9 @@
 
 
 {% block body %}
-	<style></style>
+	<style>
 
+    </style>
 
 	<div class="content-container">
 		<div class="boutons-categorie">
@@ -37,23 +38,24 @@
 		</ul>
 	</div>
 
-    {% block script %}
+    <script>
+
 
     let switchCategorie;
 
     function changerDeCategorie() {
         if(!switchCategorie) {
             document.querySelector(".bouton-categorie.active").classList.remove("active");
-            document.querySelectorAll(".bouton-categorie")[0].classList.add("active");
+            document.querySelectorAll(".bouton-categorie")[1].classList.add("active");
+            console.log("s");
             switchCategorie = true;
         }
         else {
             document.querySelector(".bouton-categorie.active").classList.remove("active");
-            document.querySelectorAll(".bouton-categorie")[1].classList.add("active");
+            document.querySelectorAll(".bouton-categorie")[0].classList.add("active");
 
             switchCategorie = false;
         }
     }
-
-{% endblock %}
+    </script>
 {% endblock %}

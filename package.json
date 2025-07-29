@@ -26,6 +26,8 @@
     "dependencies": {
         "@hotwired/stimulus": "^3.2.2",
         "@hotwired/stimulus-webpack-helpers": "^1.0.1",
-        "flowbite": "^3.1.2"
+        "flowbite": "^3.1.2",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
     }
 }

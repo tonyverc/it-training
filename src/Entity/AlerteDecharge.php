@@ -25,6 +25,10 @@ class AlerteDecharge
     #[ORM\JoinColumn(nullable: false)]
     private ?Formateur $formateur = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Formation $formation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +66,18 @@ class AlerteDecharge
     public function setFormateur(?Formateur $formateur): static
     {
         $this->formateur = $formateur;
+
+        return $this;
+    }
+
+    public function getFormation(): ?Formation
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(?Formation $formation): static
+    {
+        $this->formation = $formation;
 
         return $this;
     }

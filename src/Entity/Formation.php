@@ -27,9 +27,16 @@ class Formation
     #[ORM\OneToMany(targetEntity: AlerteQualite::class, mappedBy: 'formation')]
     private Collection $alertesQualite;
 
+    /**
+     * @var Collection<int, Session>
+     */
+    #[ORM\OneToMany(targetEntity: Session::class, mappedBy: 'Formation')]
+    private Collection $sessions;
+
     public function __construct()
     {
         $this->alertesQualite = new ArrayCollection();
+        $this->sessions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,4 +101,34 @@ class Formation
 {
     return $this->nom; // ou autre champ : prénom, email, etc.
 }
+
+    /**
+     * @return Collection<int, Session>
+     */
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
+
+    public function addSession(Session $session): static
+    {
+        if (!$this->sessions->contains($session)) {
+            $this->sessions->add($session);
+            $session->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSession(Session $session): static
+    {
+        if ($this->sessions->removeElement($session)) {
+            // set the owning side to null (unless already changed)
+            if ($session->getFormation() === $this) {
+                $session->setFormation(null);
+            }
+        }
+
+        return $this;
+    }
 }
