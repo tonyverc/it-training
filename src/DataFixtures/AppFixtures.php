@@ -72,11 +72,20 @@ class AppFixtures extends Fixture
             $stagiaires[] = $stagiaire;
         }
 
+        for ($i=0; $i < 50; $i++) { 
+            $session = new Session();
+            $session->setMinParticipants(mt_rand(3,4));
+            $session->setPrix(mt_rand(223.05,433.65));
+            $session->setFormation($formations[mt_rand(0,count($formations) - 1)]);
+        }
+
+
         $evaluationsJour = [];
 
         for ($i=0; $i < 50; $i++) { 
             $alerteDecharge = new AlerteDecharge();
             $alerteDecharge->setFormation($formations[mt_rand(0,1) ? 0 : count($formations) - 1]);
+            
             $alerteDecharge->setStagiaire($stagiaires[mt_rand(0,1) ? 0 : count($stagiaires) - 1]);
             $alerteDecharge->setContenu($this->faker->paragraph());
         }

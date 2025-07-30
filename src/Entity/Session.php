@@ -58,24 +58,24 @@ class Session
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeImmutable
+    public function getDateDebut(): ?\DateTime
     {
         return $this->date_debut;
     }
 
-    public function setDateDebut(\DateTimeImmutable $date_debut): static
+    public function setDateDebut(\DateTime $date_debut): static
     {
         $this->date_debut = $date_debut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeImmutable
+    public function getDateFin(): ?\DateTime
     {
         return $this->date_fin;
     }
 
-    public function setDateFin(\DateTimeImmutable $date_fin): static
+    public function setDateFin(\DateTime $date_fin): static
     {
         $this->date_fin = $date_fin;
 
