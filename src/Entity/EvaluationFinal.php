@@ -59,6 +59,9 @@ class EvaluationFinal
     #[ORM\Column]
     private ?\DateTime $date = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stagiaire = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -240,6 +243,18 @@ class EvaluationFinal
     public function setDate(\DateTime $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getStagiaire(): ?string
+    {
+        return $this->stagiaire;
+    }
+
+    public function setStagiaire(string $stagiaire): static
+    {
+        $this->stagiaire = $stagiaire;
 
         return $this;
     }

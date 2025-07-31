@@ -51,7 +51,7 @@ final class EvaluationJourController extends AbstractController
             $message = 'Évaluation enregistrée avec succès.';
 
             if ($request->isXmlHttpRequest()) {
-                return $this->json(['success' => true, 'message' => $message]);
+                return $this->json(['success' => false, 'message' => $message]);
             }
 
             $this->addFlash('success', $message);

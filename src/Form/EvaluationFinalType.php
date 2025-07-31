@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,11 +16,21 @@ class EvaluationFinalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('accueil')
-            ->add('salle')
-            ->add('equipements')
-            ->add('repas')
-            ->add('contenuDeLaFormation')
+            ->add('accueil', HiddenType::class, [
+                'required' => true,
+            ])
+            ->add('salle', HiddenType::class, [
+                'required' => true,
+            ])
+            ->add('equipements', HiddenType::class, [
+                'required' => true,
+            ])
+            ->add('repas', HiddenType::class, [
+                'required' => true,
+            ])
+            ->add('contenuDeLaFormation', HiddenType::class, [
+                'required' => true,
+            ])
             ->add('recommandation', ChoiceType::class, [
                 'choices' => [
                     'Oui' => true,
@@ -44,13 +55,19 @@ class EvaluationFinalType extends AbstractType
                 'label' => 'Techniques d\'animations',
                 'required' => true,
             ])
-            ->add('autresProjets', HiddenType::class, [
+            ->add('autresProjets', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'expanded' => true,
+                'multiple' => false,
                 'required' => true,
             ])
             ->add('satisfactionGeneral', HiddenType::class, [
                 'required' => true,
             ])
-            ->add('avisFinal', HiddenType::class, [
+            ->add('avisFinal', TextareaType::class, [
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [

@@ -26,15 +26,22 @@ public function evaluationFinal(Request $request, EntityManagerInterface $em): R
     if ($form->isSubmitted() && $form->isValid()) {
         $repo = $em->getRepository(EvaluationFinal::class);
         $existing = $repo->findOneBy([
-            // 'stagiaire' => $evaluation->getStagiaire(),
+            'stagiaire' => $evaluation->getStagiaire(),
             'date' => $today,
         ]);
 
         if ($existing) {
+            if($request->isXmlHttpRequest()) {
+                return $this->json(['success' => false, 'message' => 'Vous avez déjà soumis une évaluation pour aujourd\'hui.']);
+            }
             $this->addFlash('error', 'Vous avez déjà soumis une évaluation pour aujourd\'hui.');
         } else {
             $em->persist($evaluation);
             $em->flush();
+            
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['success' => true, 'message' => 'Évaluation enregistrée avec succès.']);
+            }
             $this->addFlash('success', 'Évaluation enregistrée avec succès.');
         }
     }

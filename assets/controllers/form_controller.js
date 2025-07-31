@@ -15,7 +15,7 @@ export default class extends Controller {
         'X-Requested-With': 'XMLHttpRequest' // important pour détecter isXmlHttpRequest côté Symfony
       }
     })
-      .then(response => response.json())
+      .then(response => response.text())
       .then(data => {
         this.feedbackTarget.innerHTML = `
           <div class="alert alert-${data.success ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
