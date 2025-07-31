@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormateurSignalerStagiaireController!{% endblock %}
+
+{% block body %}
+    <div class="flex flex-col items-center p-2">
+        <h2 class="w-[100%] text-2xl font-bold text-blue-950">Stagiaires</h2>
+
+        <div class="flex items-center flex-col w-[100%] max-w-[850px]">
+            <div id="bouton-liste" class="w-[100%] flex flex-row flex-wrap">
+                {% for  formation in formations %}
+                    <button type="button" class="px-1 py-0.5 {% if loop.first %} pagination-sofiane-actif {% else %} pagination-sofiane {% endif %}">{{formation.formation.nom ~ " " ~ formation.id}}</button>
+                {% endfor %}
+            </div>
+
+            <div id="stagiaire-liste" class="w-[100%]">
+                {% for  formation in formations %}
+                <div class="stagiaire-liste-formation {% if not loop.first %} hidden{% endif %}">
+                    {% for stagiaire in formation.stagiaires %}
+                    <div class="flex flex-row odd:bg-white even:bg-[#E8E8E8] p-1">
+                        <div class="flex-grow w-1/3"><span class="font-bold uppercase">{{stagiaire.nom}}</span> {{stagiaire.prenom}}</div>
+                        <div class="flex-grow text-center w-1/3 border-black border-r border-l">{{stagiaire.email}}</div>
+                        <div  class="flex-grow text-right w-1/3">
+                            <a class="bg-[#0B1141] text-white px-2 py-1 rounded-full" href="{{ path("app_formateur_signaler_stagiaire", {slug: stagiaire.id}) }}">Signaler</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
