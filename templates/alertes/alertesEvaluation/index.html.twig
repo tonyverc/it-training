@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 	{{ encore_entry_link_tags('app') }}
-	<link rel="stylesheet" href="{{ asset('styles/alertes.css') }}">
+	<link rel="stylesheet" href="{{ asset("styles/alertes.css") }}">
 {% endblock %}
 
 
@@ -14,24 +14,27 @@
 
 	<div class="content-container">
 		<div class="boutons-categorie">
-                <button class="bouton-categorie active" onclick="changerDeCategorie()">Evaluation</button>
-			    <button class="bouton-categorie" onclick="changerDeCategorie()">Stagiaires</button>
+                <a class="bouton-categorie active">Qualité</a>
+			    <a class="bouton-categorie" href="{{path("app_alertes_stagiaires")}}" onclick="changerDeCategorie()">Décharge</a>
 		</div>
 		<ul class="alertes">
 
 				{% for alerte in alertes %}
 					<li class="alerte">
-                    <div>
-                        <button>
-                            <div class="ligne"></div>
+                    <div class="container-date-supprimer">
+                        <p>Le <time datetime="">{{alerte.date|date('d/m/Y H:i')}}</time></p>
+                        <div class="container-bouton-supprimer-alerte">
+                        <button class="bouton-supprimer-alerte">
+                            <div class="ligne a-gauche"></div>
                             <div class="ligne"></div>
                         </button>
+                        </div>
                     </div>
-						<time datetime="">{{alerte.date|date('d/m/Y H:i')}}</time>
 						<h1 class="titre-alerte">{{alerte.titre}}</h1>
-						<p>Formation:
+						<p><span>Formation:</span>
 							{{alerte.formation.nom}}</p>
-						<p>{{alerte.description}}</p>
+						<p class="description-alerte">{{alerte.description|raw}}</p>
+                        <button class="btn-marquer-alerte">Marquer comme lu</button>
 					</li>
 				{% endfor %}
             
@@ -39,6 +42,25 @@
 	</div>
 
     <script>
+
+    const alertes = document.querySelectorAll('.alerte');
+
+let maxHeight = 0;
+
+// Step 1: find the tallest height
+alertes.forEach(alerte => {
+  const height = alerte.offsetHeight;
+  if (height > maxHeight) {
+    maxHeight = height;
+  }
+});
+
+// Step 2: apply that height to all
+alertes.forEach(alerte => {
+  alerte.style.height = maxHeight + 'px';
+});
+
+
 
 
     let switchCategorie;

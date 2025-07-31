@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class AlertesEvaluationController extends AbstractController
 {
-    #[Route('/alertes/evaluation', name: 'app_alertes', defaults: ['switch' => false])]
+    #[Route('/alertes/evaluation', name: 'app_alertes_qualite', defaults: ['switch' => false])]
     public function index(AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, Request $request): Response
     {
         $alertes = $alerteQualiteRepository->findAll();

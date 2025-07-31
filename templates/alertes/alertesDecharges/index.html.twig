@@ -14,8 +14,8 @@
 
 	<div class="content-container">
 		<div class="boutons-categorie">
-                <button class="bouton-categorie active" onclick="changerDeCategorie()">Evaluation</button>
-			    <button class="bouton-categorie" onclick="changerDeCategorie()">Stagiaires</button>
+                <a class="bouton-categorie" href="{{path("app_alertes_qualite")}}" onclick="changerDeCategorie()">Qualité</a>
+			    <a class="bouton-categorie active" onclick="changerDeCategorie()">Décharge</a>
 		</div>
 		<ul class="alertes">
 
@@ -37,7 +37,7 @@
             
 		</ul>
 	</div>
-
+{# 
     <script>
 
 
@@ -57,5 +57,5 @@
             switchCategorie = false;
         }
     }
-    </script>
+    </script> #}
 {% endblock %}

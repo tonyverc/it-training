@@ -29,6 +29,10 @@ class AlerteDecharge
     #[ORM\JoinColumn(nullable: false)]
     private ?Formation $formation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'alerteDecharges')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Session $session = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -78,6 +82,18 @@ class AlerteDecharge
     public function setFormation(?Formation $formation): static
     {
         $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): static
+    {
+        $this->session = $session;
 
         return $this;
     }
