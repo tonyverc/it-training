@@ -8,7 +8,7 @@
 		<img src="{{ asset('images/Logo_it-Traning_Noir.svg')}}" alt="Logo IT-TRAINING">
 	</div>
 
-	<h1 class="text-center text-2xl font-bold text-black py-2">Évaluation Quotidienne - IT-TRAINING</h1>
+	<h1 class="text-center text-3xl font-bold text-black py-2">Évaluation Quotidienne - IT-TRAINING</h1>
 
 	<div data-controller="form" data-form-target="feedback" class="max-w-xl mx-auto mt-10 text-xl ">
 		<div data-form-target="feedback"></div>
@@ -50,10 +50,10 @@
 		{# bloc stars.twig.html #}
 		<div class="p-4 sm:p-0" data-controller="stars">
 			<div data-stars-target="group">
-				<label class="block text-black mb-2">Satisfaction</label>
+				<label class="block text-black mb-2 font-bold text-2xl">Satisfaction</label>
 				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
-						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer w-12" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
 
 					{% endfor %}
 				</div>
@@ -63,10 +63,10 @@
 			</div>
 
 			<div data-stars-target="group">
-				<label class="block text-black mb-2">Clarté des explications</label>
+				<label class="block text-black mb-2 font-bold text-2xl">Clarté des explications</label>
 				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
-						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
+						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer w-12" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
 					{% endfor %}
 				</div>
 				{{ form_widget(form.clarte, {
@@ -82,7 +82,7 @@
                     placeholder: ' '
                 }
             }) }}
-			<label for="{{ form.difficultes.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+			<label for="{{ form.difficultes.vars.id }}" class="peer-focus:font-medium absolute font-bold text-2xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
 				Difficultés rencontrées
 			</label>
 			{{ form_errors(form.difficultes) }}
@@ -95,7 +95,7 @@
                     placeholder: ' '
                 }
             }) }}
-			<label for="{{ form.suggestions.vars.id }}" class="peer-focus:font-medium absolute text-xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+			<label for="{{ form.suggestions.vars.id }}" class="peer-focus:font-medium absolute font-bold text-2xl text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
 				Suggestions
 			</label>
 			{{ form_errors(form.suggestions) }}

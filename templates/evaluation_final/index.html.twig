@@ -11,7 +11,7 @@
 	<h1 class="text-center text-2xl font-bold text-black py-2">Évaluation Final - IT-TRAINING</h1>
 
 
-	<div data-controller="form" data-form-target="feedback" class="max-w-xl mx-auto mt-10 text-xl ">
+	<div data-controller="form" data-form-target="feedback" class="max-w-xl mx-auto mt-10 text-xl">
 		<div data-form-target="feedback"></div>
 
 		{{ form_start(form, {
@@ -50,7 +50,7 @@
 
 		{# bloc stars.twig.html #}
 			<div class="p-4 sm:p-0" data-controller="stars"> <div data-stars-target="group">
-				<label class="block text-black mb-2">Accueil:</label>
+				<label class="block text-black mb-2 font-bold">Accueil:</label>
 				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
 						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -62,8 +62,8 @@
 			</div>
 
 			<div data-stars-target="group">
-				<h2 class="text-center">Environnement :</h2>
-				<label class="block text-black mb-2 mt-2">Salle:</label>
+				<h2 class="text-center font-bold text-2xl">Environnement :</h2>
+				<label class="block text-black mb-2 mt-2 font-bold">Salle:</label>
 				<div class="flex gap-1 mb-2">
 					{% for i in 1..5 %}
 						<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -74,7 +74,7 @@
       attr: { 'data-stars-target': 'input', class: 'hidden' }
     }) }}
 				<div data-stars-target="group">
-					<label class="block text-black mb-2 mt-2">Equipements:</label>
+					<label class="block text-black mb-2 mt-2 font-bold">Equipements:</label>
 					<div class="flex gap-1 mb-2">
 						{% for i in 1..5 %}
 							<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -86,7 +86,7 @@
 				</div>
 
 				<div data-stars-target="group">
-					<label class="block text-black mb-2 mt-2">Repas:</label>
+					<label class="block text-black mb-2 mt-2 font-bold">Repas:</label>
 					<div class="flex gap-1 mb-2">
 						{% for i in 1..5 %}
 							<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -98,7 +98,7 @@
 				</div>
 
 				<div data-stars-target="group">
-					<label class="block text-black mb-2 mt-2">Contenu de la formation:</label>
+					<label class="block text-black mb-2 mt-2 font-bold">Contenu de la formation:</label>
 					<div class="flex gap-1 mb-2">
 						{% for i in 1..5 %}
 							<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -109,8 +109,8 @@
     }) }}
 				</div>
 				<div>
-					<label class="block text-black mb-2">Recommanderais-tu cette formation à quelqu'un d'autre ?</label>
-					<div class="flex gap-4">
+					<label class="block text-black mb-2 font-bold">Recommanderais-tu cette formation à quelqu'un d'autre ?</label>
+					<div class="flex gap-4 justify-center mb-4">
 						{% for choix in form.recommandation %}
 							<label class="flex items-center gap-2 cursor-pointer bg-white border border-gray-300 rounded-full px-4 py-2 hover:bg-[#38DEB9] transition-all">
 								{{ form_widget(choix) }}
@@ -122,8 +122,8 @@
 				</div>
 
 				<div data-stars-target="group">
-					<h2 class="text-center">Formateur :</h2>
-					<label class="block text-black mb-2 mt-2">Pédagogie:</label>
+					<h2 class="text-center font-bold text-2xl">Formateur :</h2>
+					<label class="block text-black mb-2 mt-2 font-bold">Pédagogie:</label>
 					<div class="flex gap-1 mb-2">
 						{% for i in 1..5 %}
 							<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -134,7 +134,7 @@
 	}) }}
 
 					<div data-stars-target="group">
-						<label class="block text-black mb-2 mt-2">Maitrise du domaine:</label>
+						<label class="block text-black mb-2 mt-2 font-bold">Maitrise du domaine:</label>
 						<div class="flex gap-1 mb-2">
 							{% for i in 1..5 %}
 								<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -145,7 +145,7 @@
 	}) }}
 
 						<div data-stars-target="group">
-							<label class="block text-black mb-2 mt-2">Disponibilité:</label>
+							<label class="block text-black mb-2 mt-2 font-bold">Disponibilité:</label>
 							<div class="flex gap-1 mb-2">
 								{% for i in 1..5 %}
 									<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -155,7 +155,7 @@
 	  attr: { 'data-stars-target': 'input', class: 'hidden' }
 	}) }}
 							<div data-stars-target="group">
-								<label class="block text-black mb-2 mt-2">Réponses aux questions:</label>
+								<label class="block text-black mb-2 mt-2 font-bold">Réponses aux questions:</label>
 								<div class="flex gap-1 mb-2">
 									{% for i in 1..5 %}
 										<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -165,7 +165,7 @@
 	  attr: { 'data-stars-target': 'input', class: 'hidden' }
 	}) }}
 								<div data-stars-target="group">
-									<label class="block text-black mb-2 mt-2">Techniques d'animation:</label>
+									<label class="block text-black mb-2 mt-2 font-bold">Techniques d'animation:</label>
 									<div class="flex gap-1 mb-2">
 										{% for i in 1..5 %}
 											<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -175,8 +175,8 @@
 	  attr: { 'data-stars-target': 'input', class: 'hidden' }
 	}) }}
 									<div>
-										<label class="block text-black mb-2">Envisage-tu d'autres projets de formation ?</label>
-										<div class="flex gap-4">
+										<label class="block text-black mb-2 font-bold">Envisage-tu d'autres projets de formation ?</label>
+										<div class="flex gap-4 justify-center">
 											{% for choix in form.autresProjets %}
 												<label class="flex items-center gap-2 cursor-pointer bg-white border border-gray-300 rounded-full px-4 py-2 hover:bg-[#38DEB9] transition-all">
 													{{ form_widget(choix) }}
@@ -187,7 +187,7 @@
 										{{ form_errors(form.autresProjets) }}
 									</div>
 									<div data-stars-target="group">
-										<label class="block text-black mb-2 mt-2">Satisfaction Générale:</label>
+										<label class="block text-black mb-2 mt-2 font-bold">Satisfaction Générale:</label>
 										<div class="flex gap-1 mb-2">
 											{% for i in 1..5 %}
 												<span class="star text-4xl text-gray-300 bg-gradient-to-r from-[#38DEB9] via-[#112A46] to-[#712F6F] bg-clip-text text-transparent hover:opacity-90 cursor-pointer" data-action="click->stars#selectStar" data-stars-value="{{ i }}">☆</span>
@@ -197,7 +197,7 @@
 	  attr: { 'data-stars-target': 'input', class: 'hidden' }
 	}) }}
 										<div class="relative z-0 w-full group">
-											<label class="block text-black mb-2 mt-2">Avis Final:</label>
+											<label class="block text-black mb-2 mt-2 font-bold">Avis Final:</label>
 											{{ form_widget(form.avisFinal, {
 												attr: {
 													class: 'peer block py-2.5 px-0 w-full text-xl text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-black-600',
@@ -212,7 +212,7 @@
 									<div>
 										{{ form_widget(form.save, {
                 attr: {
-                    class: 'text-[#112A46] bg-[#38DEB9] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-48 px-5 py-2.5 text-center cursor-pointer mx-2 '
+                    class: 'text-[#112A46] bg-[#38DEB9] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-48 px-5 py-2.5 text-center cursor-pointer mt-4'
                 }
             }) }}
 									</div>
