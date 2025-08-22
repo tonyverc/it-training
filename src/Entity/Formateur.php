@@ -29,9 +29,16 @@ class Formateur extends User
     #[ORM\OneToMany(targetEntity: Affecte::class, mappedBy: 'formateur')]
     private Collection $affectes;
 
+    /**
+     * @var Collection<int, SignalementStagiaire>
+     */
+    #[ORM\OneToMany(targetEntity: SignalementStagiaire::class, mappedBy: 'formateur')]
+    private Collection $signalementStagiaires;
+
     public function __construct()
     {
         $this->affectes = new ArrayCollection();
+        $this->signalementStagiaires = new ArrayCollection();
     }
     
     public function getNom(): ?string
@@ -106,6 +113,36 @@ class Formateur extends User
             // set the owning side to null (unless already changed)
             if ($affecte->getFormateur() === $this) {
                 $affecte->setFormateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SignalementStagiaire>
+     */
+    public function getSignalementStagiaires(): Collection
+    {
+        return $this->signalementStagiaires;
+    }
+
+    public function addSignalementStagiaire(SignalementStagiaire $signalementStagiaire): static
+    {
+        if (!$this->signalementStagiaires->contains($signalementStagiaire)) {
+            $this->signalementStagiaires->add($signalementStagiaire);
+            $signalementStagiaire->setFormateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalementStagiaire(SignalementStagiaire $signalementStagiaire): static
+    {
+        if ($this->signalementStagiaires->removeElement($signalementStagiaire)) {
+            // set the owning side to null (unless already changed)
+            if ($signalementStagiaire->getFormateur() === $this) {
+                $signalementStagiaire->setFormateur(null);
             }
         }
 

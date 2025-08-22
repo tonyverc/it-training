@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormateurSignalerStagiaireController!{% endblock %}
+
+{% block body %}
+    <h2 class="w-[100%] text-2xl font-bold text-blue-950">Stagiaires</h2>
+    <div class="flex flex-col items-center p-2">
+    <div>
+        <h3>signaler <span class="font-bold uppercase">{{nom_stagiaire}}</span> {{prenom_stagiaire}}</h3>
+
+        {{form_start(form)}}
+
+        <div class="flex flex-col">
+            {{form_label(form.commentaire)}}
+            {{form_widget(form.commentaire)}}
+        </div>
+        {{form_widget(form.Signaler, {attr: {class: "font-bold"}})}}
+        {{form_end(form)}}
+    </div>
+    </div>
+{% endblock %}

@@ -36,9 +36,16 @@ class Stagiaire
     #[ORM\ManyToMany(targetEntity: Session::class, inversedBy: 'stagiaires')]
     private Collection $session;
 
+    /**
+     * @var Collection<int, SignalementStagiaire>
+     */
+    #[ORM\OneToMany(targetEntity: SignalementStagiaire::class, mappedBy: 'stagiaire')]
+    private Collection $signalementStagiaires;
+
     public function __construct()
     {
         $this->session = new ArrayCollection();
+        $this->signalementStagiaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +134,35 @@ class Stagiaire
     {
         $this->session->removeElement($session);
 
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SignalementStagiaire>
+     */
+    public function getSignalementStagiaires(): Collection
+    {
+        return $this->signalementStagiaires;
+    }
+
+    public function addSignalementStagiaire(SignalementStagiaire $signalementStagiaire): static
+    {
+        if (!$this->signalementStagiaires->contains($signalementStagiaire)) {
+            $this->signalementStagiaires->add($signalementStagiaire);
+            $signalementStagiaire->setStagiaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalementStagiaire(SignalementStagiaire $signalementStagiaire): static
+    {
+        if ($this->signalementStagiaires->removeElement($signalementStagiaire)) {
+            // set the owning side to null (unless already changed)
+            if ($signalementStagiaire->getStagiaire() === $this) {
+                $signalementStagiaire->setStagiaire(null);
+            }
+        }
         return $this;
     }
 }
