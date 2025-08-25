@@ -117,8 +117,9 @@ class AppFixtures extends Fixture
             $alerteDecharge->setSession($sessions[mt_rand(0,count($formateurs) - 1)]);
             $alerteDecharge->setStagiaire($stagiaires[mt_rand(0,count($stagiaires) - 1)]);
             $alerteDecharge->setContenu("Le formateur " . $alerteDecharge->getFormateur()->getPrenom() . " " . $alerteDecharge->getFormateur()->getNom()
-                                         .  "a dechargé de sa résponsabilité du stagiaire");
-
+                                         .  " a dechargé de sa résponsabilité du stagiaire " . $alerteDecharge->getStagiaire()->getPrenom() . " " . $alerteDecharge->getStagiaire()->getNom());
+            $alerteDecharge->setLu(mt_rand(false, true));
+           
             $manager->persist($alerteDecharge);
         }
 
@@ -178,6 +179,7 @@ class AppFixtures extends Fixture
 
                 $evaluationJour->setAlerteQualite($alerte);
 
+                $alerte->setLu(mt_rand(false, true));
                 $alerte->setTitre($messageTitre);
                 $alerte->setDescription($messageDescription);
                 $alerte->setFormation($formations[mt_rand(0,count($formations) - 1)]);

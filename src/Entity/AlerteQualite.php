@@ -37,6 +37,9 @@ class AlerteQualite
     #[ORM\JoinColumn(nullable: false)]
     private ?Formation $formation = null;
 
+    #[ORM\Column]
+    private ?bool $lu = null;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -125,6 +128,18 @@ class AlerteQualite
     public function setFormation(?Formation $formation): static
     {
         $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function isLu(): ?bool
+    {
+        return $this->lu;
+    }
+
+    public function setLu(bool $lu): static
+    {
+        $this->lu = $lu;
 
         return $this;
     }

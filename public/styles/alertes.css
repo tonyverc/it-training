@@ -32,6 +32,13 @@
     padding: 4px;
     border-radius: 50%;
     cursor: pointer;
+    transition: background-color 1s ease-in, width 1s ease-in, height 1s ease-in;
+}
+
+.container-bouton-supprimer-alerte:hover {
+    background-color: #441d42;
+    width: 34px;
+    height: 34px;
 }
 
 .bouton-supprimer-alerte {
@@ -45,10 +52,15 @@
     position: relative;
 }
 
-.pd-8 {
+.padding-8 {
     padding: 8px;
 }
 
+.d-flex-jst-center {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 
 
 .bouton-supprimer-alerte .ligne {
@@ -86,7 +98,7 @@
     padding: 10px;
     background-color: #EEEEEE;
     border-radius: 16px;
-    border: 2px solid #38DEB9;
+    border: 2px solid #000000;
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
     justify-content: space-between;
     min-height: max-content;
@@ -101,9 +113,11 @@
 .btn-marquer-alerte {
     padding: 5px 10px;
     font-size: 16px;
+    width: 100%;
     color: white;
     border-radius: 100px;
     background-color: var(--primary-btn-color);
+    cursor: pointer;
 }
 
 .boutons-categorie {
@@ -124,7 +138,97 @@
     background-color: #0B1141;
 }
 
+.bgr {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: opacity 1s ease;
+}
 
 .description-alerte {
     margin-bottom: 40px;
+}
+
+.marque-lu {
+    padding: 7px;
+    background-color: #bdbdbd;
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
+}
+
+.marque-lu img {
+    width: 20px;
+    height: 20px;
+    fill: var(--primary-btn-color);
+}
+
+.opacity-0 {
+    opacity: 0;
+    z-index: -1;
+}
+.hidden {
+    display: none;
+}
+
+.fenetre-demande-de-supprimer {
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    top: 50%;
+    left: 40%;
+    font-size: 24px;
+    padding: 40px;
+}
+
+.texte-confirmation {
+    margin-bottom: 20px;
+}
+
+.bouton-acceptation-de-suppression {
+    border-radius: 100px;
+    background-color: var(--primary-btn-color);
+    padding: 20px 60px;
+    color: white;
+}
+
+.bouton-refuse-de-suppression {
+    border-radius: 100px;
+    padding: 20px 60px;
+    border: 3px solid var(--primary-btn-color);
+    box-sizing: border-box;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 40px;
+}
+
+.pagination span a {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    border: 3px solid var(--primary-btn-color);
+    box-sizing: border-box;
+}
+
+.pagination .current {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    color: white;
+    background-color: var(--primary-btn-color);
+    border: 3px solid var(--primary-btn-color);
+}
+
+.pagination .previous a, .pagination .next a, .pagination .last a , .pagination .first a {
+    color: white;
+    background-color: var(--primary-btn-color);
 }

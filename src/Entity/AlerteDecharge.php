@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AlerteDechargeRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,6 +33,16 @@ class AlerteDecharge
     #[ORM\ManyToOne(inversedBy: 'alerteDecharges')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Session $session = null;
+
+    public function __construct() {
+        $this->date = new DateTimeImmutable();
+    }
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $date = null;
+
+    #[ORM\Column]
+    private ?bool $lu = null;
 
     public function getId(): ?int
     {
@@ -94,6 +105,30 @@ class AlerteDecharge
     public function setSession(?Session $session): static
     {
         $this->session = $session;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeImmutable $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function isLu(): ?bool
+    {
+        return $this->lu;
+    }
+
+    public function setLu(bool $lu): static
+    {
+        $this->lu = $lu;
 
         return $this;
     }
