@@ -9,11 +9,23 @@
 {% set countForm = 0 %}
 
 
+
 {% block body %}
 	<div class="content-container">
 		<div class="boutons-categorie">
 			<a class="bouton-categorie active">Qualité</a>
 			<a class="bouton-categorie" href="{{path("app_alertes_decharges")}}" onclick="changerDeCategorie()">Décharge</a>
+		</div>
+		<div class="tri">
+			<form action="">
+			<input type="text" placeholder="Stagiaire" onclick=""/>
+				<select name="" id="" onchange="trierParFormation(this)">
+				<option class="titre-de-tri-de-formation" value="" disabled selected hidden>Formation</option>
+					{% for formation in formations %}
+						<option onclick="" value="{path('app_trier', {formationId: formation.id})}}">{{formation.nom}}</option>
+					{% endfor %}
+				</select>
+			</form>
 		</div>
 		<ul class="alertes">
 
@@ -36,13 +48,13 @@
 						{{alerte.formation.nom}}</p>
 					<p class="description-alerte">{{alerte.description|raw}}</p>
 					{% if not alerte.lu %}
-                    {{ form_start(forms[countForm], {
+                    {{ form_start(forms[loop.index0], {
     'action': path('app_marquer_comme_lu_alertes_qualite', { id: alerte.id }),
     'attr': {'onsubmit': 'marquerCommeLu(alerte.id)'}
 }) }}
                         <input type="submit" value="Marquer comme lu" onclick="marquerCommeLu({{alerte.id}})" class="btn-marquer-alerte" onclick="">
                         {% set countForm = countForm + 1 %}
-                    {{form_end(forms[countForm])}}
+                    {{form_end(forms[loop.index0])}}
                     </form>
 						
 					{% else %}
@@ -71,7 +83,6 @@
 
 let maxHeight = 0;
 
-// Step 1: find the tallest height
 alertes.forEach(alerte => {
 const height = alerte.offsetHeight;
 if (height > maxHeight) {
@@ -79,7 +90,6 @@ maxHeight = height;
 }
 });
 
-// Step 2: apply that height to all
 alertes.forEach(alerte => {
 alerte.style.height = maxHeight + 'px';
 });
@@ -183,6 +193,10 @@ if(document.querySelector(".pagination .current").textContent == 2)
 
 if(document.querySelector(".pagination .current").textContent == 3)
 	document.querySelector(".pagination .first a").remove();
+
+function trierParFormation(selectElement) {
+        window.location.href = selectElement.value;
+    }
 
 	</script>
 {% endblock %}

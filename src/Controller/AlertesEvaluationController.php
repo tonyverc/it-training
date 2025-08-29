@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\AlerteQualite;
+use App\Entity\Formation;
+use App\Entity\Stagiaire;
+use App\Form\AlerteTriType;
 use App\Form\MarquerCommeLuType;
 use App\Repository\AlerteQualiteRepository;
 use App\Repository\FormationRepository;
@@ -18,11 +21,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class AlertesEvaluationController extends AbstractController
 {
     #[Route('/alertes/evaluation', name: 'app_alertes_qualite', defaults: ['switch' => false])]
-    public function index(AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index( AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $alertes = $paginator->paginate($alerteQualiteRepository->getSorted(), $request->query->getInt("page", 1), 15);
         
         $formations = $formationRepository->findAll();
+
+        
 
         $forms = [];
 
@@ -57,5 +62,27 @@ final class AlertesEvaluationController extends AbstractController
         return $this->redirectToRoute("app_alertes_qualite");
     }
     
+    #[Route('/alertes/evaluation/trier/{formationId}/{stagiaireNomPrenom}', name: 'app_trier', methods: ["GET"], defaults: ['formationId' => false, 'stagiaireNomPrenom' => false])]
+
+    public function getSortedByFilter($stagiaireNomPrenom, Formation $formation,AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): Response {
+        
+        $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($formation, 
+                                                                end(explode('/', rtrim($request->getQueryString(), '/')))), $request->query->getInt("page", 1), 15);
+
+        $formations = $formationRepository->findAll();
+
+        $forms = [];
+
+        for ($i=0; $i < count($alertes); $i++) { 
+            $forms[] = $this->createForm(MarquerCommeLuType::class, $alertes[$i])->createView();
+        }
+        
+
+        return $this->render('alertes/alertesEvaluation/index.html.twig', [
+            'alertes' => $alertes,
+            "forms" => $forms,
+            "formations" => $formation,
+        ]);
+    }
     
 }

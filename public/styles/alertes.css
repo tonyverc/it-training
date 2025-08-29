@@ -2,8 +2,15 @@
     --primary-btn-color: #0B1141;
 }
 
+
 .content-container {
         margin: 0 12px;
+}
+
+.tri {
+    padding: 16px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .formations li {
@@ -13,6 +20,14 @@
 .formations {
     display: flex;
     flex-direction: row;
+}
+
+
+
+select {
+    appearance: none;
+    background-color: var(--primary-btn-color);
+    color:white;
 }
 
 .container-date-supprimer {

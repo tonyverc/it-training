@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\AlerteQualite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Formation;
 
 /**
  * @extends ServiceEntityRepository<AlerteQualite>
@@ -26,6 +27,30 @@ class AlerteQualiteRepository extends ServiceEntityRepository
                ->getQuery()
                ->getResult()
            ;
+       }
+
+       public function getSortedByFilter($formation = null, $stagiaire = null): array
+       {    
+
+        if($formation && !$stagiaire){
+           return $this->createQueryBuilder('a')
+               ->where('a.formation = :formation')
+               ->setParameter('formation', $formation)
+               ->orderBy('a.lu', 'ASC')
+               ->getQuery()
+               ->getResult()
+           ;
+        }
+        else if ($formation && $stagiaire){
+            return $this->createQueryBuilder('a')
+               ->where('a.formation = :formation')
+               ->setParameter('formation', $formation)
+               ->setParameter('formation', $stagiaire)
+               ->orderBy('a.lu', 'ASC')
+               ->getQuery()
+               ->getResult()
+           ;
+        }
        }
 
     //    public function findOneBySomeField($value): ?AlerteQualite
