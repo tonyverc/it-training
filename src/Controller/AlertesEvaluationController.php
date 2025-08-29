@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AlerteQualite;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Formation;
 use App\Entity\Stagiaire;
 use App\Form\AlerteTriType;
@@ -64,10 +65,9 @@ final class AlertesEvaluationController extends AbstractController
     
     #[Route('/alertes/evaluation/trier/{formationId}/{stagiaireNomPrenom}', name: 'app_trier', methods: ["GET"], defaults: ['formationId' => false, 'stagiaireNomPrenom' => false])]
 
-    public function getSortedByFilter($stagiaireNomPrenom, Formation $formation,AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): Response {
+    public function getSortedByFilter($stagiaireNomPrenom, Formation $formation,AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): JsonResponse {
         
-        $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($formation, 
-                                                                end(explode('/', rtrim($request->getQueryString(), '/')))), $request->query->getInt("page", 1), 15);
+        $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($formation, ), $request->query->getInt("page", 1), 15);
 
         $formations = $formationRepository->findAll();
 
@@ -78,11 +78,7 @@ final class AlertesEvaluationController extends AbstractController
         }
         
 
-        return $this->render('alertes/alertesEvaluation/index.html.twig', [
-            'alertes' => $alertes,
-            "forms" => $forms,
-            "formations" => $formation,
-        ]);
+        return new JsonResponse($alertes);
     }
     
 }
