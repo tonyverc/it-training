@@ -61,7 +61,11 @@ class AppFixtures extends Fixture
             $manager->persist($form);
             if($i == 0)$formateur = $form;
         }
-
+        $resp = new User();
+        $resp->setEmail("resp@mail.com");
+        $hashedPassword = $this->userPasswordHasherInterface->hashPassword($resp, $plaintextPassword);
+        $plaintextPassword = "1234";
+        $resp->setPassword($hashedPassword);
         //formation
         $formation = new Formation();
         $formation->setNom("formation");

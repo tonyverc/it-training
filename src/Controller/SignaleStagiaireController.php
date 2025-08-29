@@ -50,6 +50,8 @@ final class SignaleStagiaireController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
+
+            if($stagiaire->getSession()->getAffecte())
             $signalement = $form ->getData();
             $signalement->setFormateur($user);
             $signalement->setStagiaire($stagiaire);
