@@ -13,7 +13,9 @@ use App\Entity\Stagiaire;
 use App\Entity\EvaluationJour;
 use App\Entity\Formateur;
 use App\Entity\Formation;
+use App\Entity\Mail;
 use App\Entity\Session;
+use App\Entity\User;
 use DateTime;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -189,7 +191,31 @@ class AppFixtures extends Fixture
             $manager->persist($evaluationJour);
         }
 
-        
+        $users = [];
+
+        for ($i=0; $i < 10; $i++) { 
+            $user = new User();
+            $user->setEmail($this->faker->email());
+            $user->setRoles(["ROLES_USER"]);
+            $user->setPassword($this->hasher->hashPassword($formateur, "password"));
+
+            $manager->persist($user);
+            $users[] = $user; 
+        }
+
+        for ($i=0; $i < 50 ; $i++) { 
+            $mail = new Mail();
+
+            $mail->setNomPrenom($this->faker->lastName() . " " . $this->faker->firstName());
+            $mail->setSujet($this->faker->sentence());
+            $mail->setExpediteur($this->faker->email());
+            $mail->setDestinataire($this->faker->email());
+            $mail->setStatus(mt_rand(0,1) ? "En cours" : "Non traité");
+            $mail->setContenu($this->faker->text());
+            $mail->setUser($users[mt_rand(0, count($users) - 1)]);
+
+            $manager->persist($mail);
+        }
 
         $manager->flush();
     }

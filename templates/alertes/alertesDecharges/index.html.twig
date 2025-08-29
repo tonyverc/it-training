@@ -23,7 +23,7 @@
 				{% for alerte in alertes %}
 					<li class="alerte" id="{{alerte.id}}">
                     <div onclick="" class="container-date-supprimer">
-                        <p>Le <time datetime="">{{alerte.date|date('d/m/Y H:i')}}</time></p>
+                        <p>Le <time datetime="">{{alerte.date|date('d/m/Y')}} à {{alerte.date|date('H:i')}}</time></p>
                         <div class="container-bouton-supprimer-alerte">
                         <button class="bouton-supprimer-alerte" click"">
                             <div class="ligne a-gauche"></div>
@@ -36,13 +36,13 @@
                         <p><span>Session:</span> {{alerte.session.id}}</p>
 						<p class="description-alerte">{{alerte.contenu}}</p>
                         {% if not alerte.lu %}
-                    {{ form_start(forms[countForm], {
+                    {{ form_start(forms[loop.index0], {
     'action': path('app_marquer_comme_lu_alertes_qualite', { id: alerte.id }),
     'attr': {'onsubmit': 'marquerCommeLu(alerte.id)'}
 }) }}
                         <input type="submit" value="Marquer comme lu" onclick="marquerCommeLu({{alerte.id}})" class="btn-marquer-alerte" onclick="">
                         {% set countForm = countForm + 1 %}
-                    {{form_end(forms[countForm])}}
+                    {{form_end(forms[loop.index0])}}
                     </form>
 						
 					{% else %}
@@ -79,7 +79,7 @@ document.querySelector(".bgr").style.top = window.scrollY + "px";
 document.querySelector(".bgr").classList.remove("opacity-0");
 document.querySelector(".fenetre-demande-de-supprimer").style.top = window.scrollY + (window.innerHeight / 100 * 30) + "px";
 
-document.querySelector(".bouton-acceptation-de-suppression").addEventListener("click", function() {
+document.querySelector(".bouton-acceptation-de-suppression").onclick = function() {
 	e.parentElement.parentElement.remove();
 	fetch("/alertes/decharges/supprimer/" + e.parentElement.parentElement.id, {
         method: "POST",
@@ -91,7 +91,7 @@ document.querySelector("body").removeEventListener("wheel", preventDefaultScroll
 
 document.querySelector(".bgr").classList.add("opacity-0");
 	
-})
+}
 
 
 document.querySelector(".fenetre-demande-de-supprimer").classList.remove("hidden");

@@ -1,24 +1,22 @@
-:root {
-    --primary-btn-color: #0B1141;
-}
-
-.content-container {
-        margin: 0 12px;
-}
-
-.formations li {
+.mail li {
     font-weight: 700;
 }
 
-.formations {
+.mail {
     display: flex;
     flex-direction: row;
 }
 
+:root {
+    --primary-btn-color: #0B1141;
+}
+
+
 .container-date-supprimer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    gap: 36px;
 }
 
 .container-bouton-supprimer-alerte {
@@ -50,6 +48,12 @@
     position: relative;
 }
 
+.d-flex-jstfy-spc-between-al-it-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .padding-8 {
     padding: 8px;
 }
@@ -73,7 +77,7 @@
     transform: rotate(45deg);
 }
 
-.alertes {
+.mails {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
@@ -84,10 +88,10 @@
 }
 
 
-.alerte p span {
+.mail p span {
     font-weight: 600;
 }
-.alertes .alerte {
+.mails .mail {
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
@@ -108,28 +112,16 @@
 
 }
 
-.btn-marquer-alerte {
+.btn-occuper {
     padding: 5px 10px;
     font-size: 16px;
-    width: 100%;
+    width: 30%;
     color: white;
     border-radius: 100px;
     background-color: var(--primary-btn-color);
     cursor: pointer;
 }
 
-.boutons-categorie {
-    display: flex;
-    justify-content: center
-}
-
-.bouton-categorie {
-    padding: 8px 20px;
-    font-weight: 700;
-    font-size: 24px;
-    border-bottom: 3px solid #0B1141;
-    box-sizing: border-box;
-}
 
 .bouton-categorie.active {
     color: white;

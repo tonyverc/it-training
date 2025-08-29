@@ -19,17 +19,14 @@ class AlerteQualiteRepository extends ServiceEntityRepository
     //    /**
     //     * @return AlerteQualite[] Returns an array of AlerteQualite objects
     //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       public function getSorted(): array
+       {
+           return $this->createQueryBuilder('a')
+               ->orderBy('a.lu', 'ASC')
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?AlerteQualite
     //    {

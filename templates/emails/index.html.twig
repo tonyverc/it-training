@@ -1,27 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-	{{ encore_entry_link_tags('app') }}
-	<link rel="stylesheet" href="{{ asset("styles/alertes.css") }}">
+    {% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    <link rel="stylesheet" href="{{asset("styles/common/common.css")}}">
+    <link rel="stylesheet" href="{{asset("styles/mails.css")}}">
+
 {% endblock %}
-
-{% set alerteId = "alerteId" %}
-{% set countForm = 0 %}
-
-
 {% block body %}
-	<div class="content-container">
-		<div class="boutons-categorie">
-			<a class="bouton-categorie active">Qualité</a>
-			<a class="bouton-categorie" href="{{path("app_alertes_decharges")}}" onclick="changerDeCategorie()">Décharge</a>
-		</div>
-		<ul class="alertes">
-
-			{% for alerte in alertes %}
-				<li class="alerte" id="{{alerte.id}}">
+<div class="content-container">
+    <ul class="mails">
+    {% for mail in mails %}
+				<li class="mail" id="{{mail.id}}">
+                <div class="d-flex-jstfy-spc-between-al-it-center">
+                    <p><span>{{mail.status}}</span></p>
 					<div class="container-date-supprimer">
 						<p>Le
-							<time datetime="">{{alerte.date|date('d/m/Y')}} à {{alerte.date|date('H:i')}}</time>
+							<time datetime="">{{mail.date|date('d/m/Y')}} à {{mail.date|date("H:i")}}</time>
 						</p>
 						<div class="container-bouton-supprimer-alerte">
 							<button class="bouton-supprimer-alerte">
@@ -29,34 +23,27 @@
 								<div class="ligne"></div>
 							</button>
 						</div>
+                    </div> 
 					</div>
-					<h1 class="titre-alerte">{{alerte.titre}}</h1>
+					<p class="sujet-mails"><span>Sujet:</span> {{mail.sujet}}</p>
 					<p>
-						<span>Formation:</span>
-						{{alerte.formation.nom}}</p>
-					<p class="description-alerte">{{alerte.description|raw}}</p>
-					{% if not alerte.lu %}
-                    {{ form_start(forms[countForm], {
-    'action': path('app_marquer_comme_lu_alertes_qualite', { id: alerte.id }),
-    'attr': {'onsubmit': 'marquerCommeLu(alerte.id)'}
-}) }}
-                        <input type="submit" value="Marquer comme lu" onclick="marquerCommeLu({{alerte.id}})" class="btn-marquer-alerte" onclick="">
-                        {% set countForm = countForm + 1 %}
-                    {{form_end(forms[countForm])}}
-                    </form>
-						
-					{% else %}
-						<div class="marque-lu">
-							<img src="{{ asset('imgs/path1.png') }}" alt="" width="39" height="29"/>
-						</div>
-					{% endif %}
+						<span>Expediteur:</span>
+						{{mail.expediteur}}</p>
+                        <p>
+						<span>Destinataire:</span>
+						{{mail.destinataire}}</p>
+					<p class="description-alerte">{{mail.contenu|raw}}</p>
+                    {% if mail.status == "Non traité" %}
+                    
+                        {{ form_start(forms[loop.index0])}}
+                        <input type="submit" value="S'en occuper" onclick="" class="btn-occuper" onclick="">
+                    {% endif %}
+					{{form_end(forms[loop.index0])}}
 				</li>
 			{% endfor %}
-
-		</ul>
-	</div>
-			{{knp_pagination_render(alertes)}}
-	<div class="bgr opacity-0"></div>
+    </ul>
+    {{knp_pagination_render(mails)}}
+    <div class="bgr opacity-0"></div>
 	<div class="fenetre-demande-de-supprimer hidden">
 		<p class="texte-confirmation">Êtes-vous sûr de supprimer l'alerte ?</p>
 		<div class="d-flex-jst-center">
@@ -65,42 +52,9 @@
 		</div>
 	</div>
 
-	<script>
-
-		const alertes = document.querySelectorAll('.alerte');
-
-let maxHeight = 0;
-
-// Step 1: find the tallest height
-alertes.forEach(alerte => {
-const height = alerte.offsetHeight;
-if (height > maxHeight) {
-maxHeight = height;
-}
-});
-
-// Step 2: apply that height to all
-alertes.forEach(alerte => {
-alerte.style.height = maxHeight + 'px';
-});
-
-
-let switchCategorie;
-
-function changerDeCategorie() {
-if (! switchCategorie) {
-document.querySelector(".bouton-categorie.active").classList.remove("active");
-document.querySelectorAll(".bouton-categorie")[1].classList.add("active");
-switchCategorie = true;
-} else {
-document.querySelector(".bouton-categorie.active").classList.remove("active");
-document.querySelectorAll(".bouton-categorie")[0].classList.add("active");
-
-switchCategorie = false;
-}
-}
-
-function preventDefaultScroll(e) {
+</div>
+<script>
+    function preventDefaultScroll(e) {
 e.preventDefault();
 e.stopPropagation();
 }
@@ -114,13 +68,9 @@ document.querySelector(".bgr").style.top = window.scrollY + "px";
 document.querySelector(".bgr").classList.remove("opacity-0");
 document.querySelector(".fenetre-demande-de-supprimer").style.top = window.scrollY + (window.innerHeight / 100 * 30) + "px";
 
-function supprimerAlerte() {
-	
-}
-
 document.querySelector(".bouton-acceptation-de-suppression").onclick = function() {
-	e.parentElement.parentElement.remove();
-	fetch("/alertes/evaluation/supprimer/" + e.parentElement.parentElement.id, {
+	e.parentElement.parentElement.parentElement.remove();
+	fetch("/crm/emails/supprimer/" + e.parentElement.parentElement.parentElement.id, {
         method: "POST",
     });
 
@@ -129,8 +79,6 @@ document.querySelector(".fenetre-demande-de-supprimer").classList.add("hidden");
 document.querySelector("body").removeEventListener("wheel", preventDefaultScroll)
 
 document.querySelector(".bgr").classList.add("opacity-0");
-let nouveauBouton = document.createElement("div");
-nouveauBouton.classList.add("bouton-acceptation-de-suppression");
 	
 }
 
@@ -151,22 +99,22 @@ document.querySelector(".bouton-acceptation-de-suppression").addEventListener("c
 })
 })
 
-document.querySelectorAll(".btn-marquer-alerte").forEach(function (element) {
+
+function marquerEnCours(id) {
+    fetch("/crm/emails/s-en-occuper/" + id, {
+        method: "POST"
+    });
+}
+
+document.querySelectorAll(".btn-occuper").forEach(function (element) {
 element.addEventListener("click", function (e) {
     e.preventDefault();
-element.outerHTML = `<div class="marque-lu">
+    marquerEnCours(element.parentElement.parentElement.id);
+element.outerHTML = `<div class="marque-en-cours">
         <img src="{{ asset('imgs/path1.png') }}" alt="" width="39" height="29" />
     </div>`;
 })
 });
-
-function marquerCommeLu(id) {
-    console.log(id);
-    fetch("/alertes/evaluation/marquer-comme-lu/" + id, {
-        method: "POST",
-    });
-    
-}
 
 // modification de pagination
 
@@ -184,5 +132,5 @@ if(document.querySelector(".pagination .current").textContent == 2)
 if(document.querySelector(".pagination .current").textContent == 3)
 	document.querySelector(".pagination .first a").remove();
 
-	</script>
+</script>
 {% endblock %}

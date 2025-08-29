@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250825095951 extends AbstractMigration
+final class Version20250828102900 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -25,6 +25,7 @@ final class Version20250825095951 extends AbstractMigration
         $this->addSql('CREATE TABLE evaluation_jour (id INT AUTO_INCREMENT NOT NULL, alerte_qualite_id INT DEFAULT NULL, stagiaire_id INT DEFAULT NULL, formation_id INT NOT NULL, satisfaction INT NOT NULL, clarte INT NOT NULL, difficultes LONGTEXT DEFAULT NULL, suggestions LONGTEXT DEFAULT NULL, date DATETIME NOT NULL, UNIQUE INDEX UNIQ_9751967DBD3476D1 (alerte_qualite_id), INDEX IDX_9751967DBBA93DD6 (stagiaire_id), INDEX IDX_9751967D5200282E (formation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE formateur (id INT NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE formation (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(140) NOT NULL, fiche_formation VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE mail (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, nom_prenom VARCHAR(255) NOT NULL, expediteur VARCHAR(255) NOT NULL, destinataire VARCHAR(255) NOT NULL, status VARCHAR(255) NOT NULL, contenu LONGTEXT NOT NULL, sujet VARCHAR(255) NOT NULL, date DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_5126AC48A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE session (id INT AUTO_INCREMENT NOT NULL, formation_id INT NOT NULL, min_participants INT NOT NULL, prix DOUBLE PRECISION NOT NULL, date_debut DATETIME NOT NULL, date_fin DATETIME NOT NULL, INDEX IDX_D044D5D45200282E (formation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE stagiaire (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(100) NOT NULL, prenom VARCHAR(100) NOT NULL, diplome VARCHAR(100) DEFAULT NULL, prerequis_valide TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE test (id INT AUTO_INCREMENT NOT NULL, date DATE NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -40,6 +41,7 @@ final class Version20250825095951 extends AbstractMigration
         $this->addSql('ALTER TABLE evaluation_jour ADD CONSTRAINT FK_9751967DBBA93DD6 FOREIGN KEY (stagiaire_id) REFERENCES stagiaire (id)');
         $this->addSql('ALTER TABLE evaluation_jour ADD CONSTRAINT FK_9751967D5200282E FOREIGN KEY (formation_id) REFERENCES formation (id)');
         $this->addSql('ALTER TABLE formateur ADD CONSTRAINT FK_ED767E4FBF396750 FOREIGN KEY (id) REFERENCES user (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE mail ADD CONSTRAINT FK_5126AC48A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE session ADD CONSTRAINT FK_D044D5D45200282E FOREIGN KEY (formation_id) REFERENCES formation (id)');
     }
 
@@ -56,12 +58,14 @@ final class Version20250825095951 extends AbstractMigration
         $this->addSql('ALTER TABLE evaluation_jour DROP FOREIGN KEY FK_9751967DBBA93DD6');
         $this->addSql('ALTER TABLE evaluation_jour DROP FOREIGN KEY FK_9751967D5200282E');
         $this->addSql('ALTER TABLE formateur DROP FOREIGN KEY FK_ED767E4FBF396750');
+        $this->addSql('ALTER TABLE mail DROP FOREIGN KEY FK_5126AC48A76ED395');
         $this->addSql('ALTER TABLE session DROP FOREIGN KEY FK_D044D5D45200282E');
         $this->addSql('DROP TABLE alerte_decharge');
         $this->addSql('DROP TABLE alerte_qualite');
         $this->addSql('DROP TABLE evaluation_jour');
         $this->addSql('DROP TABLE formateur');
         $this->addSql('DROP TABLE formation');
+        $this->addSql('DROP TABLE mail');
         $this->addSql('DROP TABLE session');
         $this->addSql('DROP TABLE stagiaire');
         $this->addSql('DROP TABLE test');

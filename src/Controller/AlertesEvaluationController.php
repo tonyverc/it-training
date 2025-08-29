@@ -20,7 +20,7 @@ final class AlertesEvaluationController extends AbstractController
     #[Route('/alertes/evaluation', name: 'app_alertes_qualite', defaults: ['switch' => false])]
     public function index(AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $alertes = $paginator->paginate($alerteQualiteRepository->findAll(), $request->query->getInt("page", 1), 15);
+        $alertes = $paginator->paginate($alerteQualiteRepository->getSorted(), $request->query->getInt("page", 1), 15);
         
         $formations = $formationRepository->findAll();
 

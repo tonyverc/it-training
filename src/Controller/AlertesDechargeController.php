@@ -17,7 +17,7 @@ final class AlertesDechargeController extends AbstractController
     #[Route('/alertes/decharges', name: 'app_alertes_decharges')]
     public function index(AlerteDechargeRepository $alerteDechargeRepository, PaginatorInterface $paginator, Request $request): Response
     {   
-        $alertes = $paginator->paginate($alerteDechargeRepository->findAll(), $request->query->getInt("page", 1), 15);
+        $alertes = $paginator->paginate($alerteDechargeRepository->getSorted(), $request->query->getInt("page", 1), 15);
 
         for ($i=0; $i < count($alertes); $i++) { 
             $forms[] = $this->createForm(MarquerCommeLuType::class, $alertes[$i])->createView();
