@@ -42,10 +42,39 @@ class AlerteQualiteRepository extends ServiceEntityRepository
            ;
         }
         else if ($formation && $stagiaire){
+            $parts = explode(' ', trim($stagiaire), 2);
+            if (count($parts) === 2) 
+                [$nom, $prenom] = $parts;
+
             return $this->createQueryBuilder('a')
                ->where('a.formation = :formation')
+               ->leftJoin('a.stagiaire', 's')
                ->setParameter('formation', $formation)
-               ->setParameter('formation', $stagiaire)
+               ->setParameter('stagiaire', $stagiaire)
+               ->setParameter('stagiaire', $nom)
+               ->setParameter('stagiaire', $prenom)
+               ->andWhere('s.nom = :nom')
+               ->andWhere('s.prenom = :prenom')
+               ->orderBy('a.lu', 'ASC')
+               ->getQuery()
+               ->getResult()
+           ;
+        }
+        else {
+            $parties = explode(' ', trim($stagiaire), 2);
+            if (count($parties) === 2)
+                [$nom, $prenom] = $parties;
+            
+            
+            return $this->createQueryBuilder('a')
+               ->where('a.formation = :formation')
+               ->leftJoin('a.stagiaire', 's')
+               ->setParameter('formation', $formation)
+               ->setParameter('stagiaire', $stagiaire)
+               ->setParameter('stagiaire', $nom)
+               ->setParameter('stagiaire', $prenom)
+               ->andWhere('s.nom = :nom')
+               ->andWhere('s.prenom = :prenom')
                ->orderBy('a.lu', 'ASC')
                ->getQuery()
                ->getResult()

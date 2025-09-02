@@ -63,11 +63,11 @@ final class AlertesEvaluationController extends AbstractController
         return $this->redirectToRoute("app_alertes_qualite");
     }
     
-    #[Route('/alertes/evaluation/trier/{formationId}/{stagiaireNomPrenom}', name: 'app_trier', methods: ["GET"], defaults: ['formationId' => false, 'stagiaireNomPrenom' => false])]
+    #[Route('/alertes/evaluation/trier/{formationId}', name: 'app_trier', methods: ["GET"], defaults: ['formationId' => false, 'stagiaireNomPrenom' => false])]
 
-    public function getSortedByFilter($stagiaireNomPrenom, Formation $formation,AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): JsonResponse {
+    public function getSortedByFilter(Formation $formation,AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): JsonResponse {
         
-        $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($formation, ), $request->query->getInt("page", 1), 15);
+        $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($formation, $request->query->get("stagiaireNomPrenom")), $request->query->getInt("page", 1), 15);
 
         $formations = $formationRepository->findAll();
 
