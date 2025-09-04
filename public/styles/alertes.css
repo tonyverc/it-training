@@ -7,9 +7,15 @@
         margin: 0 12px;
 }
 
+.primary-btn {
+    background-color: var(--primary-btn-color);
+    color: white;
+} 
+
 .tri {
     padding: 16px;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: flex-end;
 }
 
@@ -29,6 +35,7 @@ select {
     background-color: var(--primary-btn-color);
     color:white;
 }
+
 
 .container-date-supprimer {
     display: flex;

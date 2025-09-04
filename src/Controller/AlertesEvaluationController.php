@@ -12,6 +12,7 @@ use App\Repository\AlerteQualiteRepository;
 use App\Repository\FormationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,30 +45,31 @@ final class AlertesEvaluationController extends AbstractController
         ]);
     }
 
-    #[Route('/alertes/evaluation/supprimer/{id}', name: 'app_delete_alertes_qualite', methods: ["POST"], defaults: ['switch' => false])]
-    public function delete(AlerteQualite $alerte, AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/alertes/evaluation/supprimer/{id}', name: 'app_delete_alertes_qualite', methods: ["DELETE"], defaults: ['switch' => false])]
+    public function delete(AlerteQualite $alerte, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {   
+        $messageAlerte = $alerte;
         $entityManager->remove($alerte);
         $entityManager->flush();
 
-        return $this->redirectToRoute("app_alertes_qualite");
+        return $this->json(['message' => 'Supprimé avec succes', "Code status" => 200], 200);
     }
 
     #[Route('/alertes/evaluation/marquer-comme-lu/{id}', name: 'app_marquer_comme_lu_alertes_qualite', methods: ["POST"], defaults: ['id' => false])]
     
-    public function marquerCommeLu(AlerteQualite $alerte, AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function marquerCommeLu(AlerteQualite $alerte, AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {   
         $alerte->setLu(true);    
         $entityManager->flush();
 
-        return $this->redirectToRoute("app_alertes_qualite");
+        return $this->json(['message' => 'Marqué comme lu', "Code status" => 200], 200);
     }
     
-    #[Route('/alertes/evaluation/trier/{formationId}', name: 'app_trier', methods: ["GET"], defaults: ['formationId' => false, 'stagiaireNomPrenom' => false])]
+    #[Route('/alertes/evaluation/trier', name: 'app_trier', methods: ["GET"], defaults: ['formationId' => false, 'stagiaireNomPrenom' => false])]
 
-    public function getSortedByFilter(Formation $formation,AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): JsonResponse {
+    public function getSortedByFilter(AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): Response {
         
-        $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($formation, $request->query->get("stagiaireNomPrenom")), $request->query->getInt("page", 1), 15);
+        $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($request->query->get("formationId"), $request->query->get("stagiaireNomPrenom")), $request->query->getInt("page", 1), 15);
 
         $formations = $formationRepository->findAll();
 
@@ -78,7 +80,11 @@ final class AlertesEvaluationController extends AbstractController
         }
         
 
-        return new JsonResponse($alertes);
+        return $this->render('alertes/alertesEvaluation/index.html.twig', [
+            'alertes' => $alertes,
+            "formations" => $formations,
+            "forms" => $forms,
+        ]);
     }
     
 }

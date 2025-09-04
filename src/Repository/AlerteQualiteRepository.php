@@ -6,6 +6,7 @@ use App\Entity\AlerteQualite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Formation;
+use Psr\Log\LoggerInterface;
 
 /**
  * @extends ServiceEntityRepository<AlerteQualite>
@@ -20,67 +21,118 @@ class AlerteQualiteRepository extends ServiceEntityRepository
     //    /**
     //     * @return AlerteQualite[] Returns an array of AlerteQualite objects
     //     */
-       public function getSorted(): array
-       {
-           return $this->createQueryBuilder('a')
-               ->orderBy('a.lu', 'ASC')
-               ->getQuery()
-               ->getResult()
-           ;
-       }
+    public function getSorted(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.lu', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-       public function getSortedByFilter($formation = null, $stagiaire = null): array
-       {    
+    public function getSortedByFilter($formation = null, $stagiaire = null): array
+    {
 
-        if($formation && !$stagiaire){
-           return $this->createQueryBuilder('a')
-               ->where('a.formation = :formation')
-               ->setParameter('formation', $formation)
-               ->orderBy('a.lu', 'ASC')
-               ->getQuery()
-               ->getResult()
-           ;
-        }
-        else if ($formation && $stagiaire){
-            $parts = explode(' ', trim($stagiaire), 2);
-            if (count($parts) === 2) 
-                [$nom, $prenom] = $parts;
+        $qb = $this->createQueryBuilder("a");
 
-            return $this->createQueryBuilder('a')
-               ->where('a.formation = :formation')
-               ->leftJoin('a.stagiaire', 's')
-               ->setParameter('formation', $formation)
-               ->setParameter('stagiaire', $stagiaire)
-               ->setParameter('stagiaire', $nom)
-               ->setParameter('stagiaire', $prenom)
-               ->andWhere('s.nom = :nom')
-               ->andWhere('s.prenom = :prenom')
-               ->orderBy('a.lu', 'ASC')
-               ->getQuery()
-               ->getResult()
-           ;
-        }
-        else {
+        $expr = $qb->expr();
+
+        if ($formation && !$stagiaire) {
+            return $qb
+                ->where('a.formation = :formation')
+                ->setParameter('formation', $formation)
+                ->orderBy('a.lu', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+        } else if ($formation && $stagiaire) {
             $parties = explode(' ', trim($stagiaire), 2);
-            if (count($parties) === 2)
-                [$nom, $prenom] = $parties;
-            
-            
-            return $this->createQueryBuilder('a')
-               ->where('a.formation = :formation')
-               ->leftJoin('a.stagiaire', 's')
-               ->setParameter('formation', $formation)
-               ->setParameter('stagiaire', $stagiaire)
-               ->setParameter('stagiaire', $nom)
-               ->setParameter('stagiaire', $prenom)
-               ->andWhere('s.nom = :nom')
-               ->andWhere('s.prenom = :prenom')
-               ->orderBy('a.lu', 'ASC')
-               ->getQuery()
-               ->getResult()
-           ;
+
+            [$nom, $prenom] = $parties;
+
+            if ($prenom === "undefined") {
+
+                return $qb
+                    ->where('a.formation = :formation')
+                    ->leftJoin('a.stagiaire', 's')
+                    ->andWhere(
+                        $expr->orX(
+                            $expr->like('LOWER(s.nom)', ':stagiaireNom'),
+                            $expr->like('LOWER(s.prenom)', ':stagiaireNom')
+                        )
+                    )
+                    ->setParameter('stagiaireNom', $nom . "%")
+                    ->setParameter('formation', $formation)
+                    ->orderBy('a.lu', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+            }
+
+
+            return $qb
+                ->where('a.formation = :formation')
+                ->leftJoin('a.stagiaire', 's')
+                ->andWhere(
+                    $expr->orX(
+                        $expr->andX(
+                            $expr->like('LOWER(s.nom)', ':stagiaireNom'),
+                            $expr->like('LOWER(s.prenom)', ':stagiairePrenom')
+                        ),
+                        $expr->andX(
+                            $expr->like('LOWER(s.nom)', ':stagiairePrenom'),
+                            $expr->like('LOWER(s.prenom)', ':stagiaireNom')
+                        )
+                    )
+                )
+                ->setParameter('stagiaireNom', $nom . "%")
+                ->setParameter('stagiairePrenom', $prenom . "%")
+                ->setParameter('formation', $formation)
+                ->orderBy('a.lu', 'ASC')
+                ->getQuery()
+                ->getResult();
+        } else {
+            $parties = explode(' ', trim($stagiaire), 2);
+
+            [$nom, $prenom] = $parties;
+
+            if ($prenom === "undefined") {
+
+                return $qb
+                    ->leftJoin('a.stagiaire', 's')
+                    ->andWhere(
+                        $expr->orX(
+                            $expr->like('LOWER(s.nom)', ':stagiaireNom'),
+                            $expr->like('LOWER(s.prenom)', ':stagiaireNom')
+                        )
+                    )
+                    ->setParameter('stagiaireNom', $nom . "%")
+                    ->orderBy('a.lu', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+            }
+
+
+            return $qb
+                ->leftJoin('a.stagiaire', 's')
+                ->andWhere(
+                    $expr->orX(
+                        $expr->andX(
+                            $expr->like('LOWER(s.nom)', ':stagiaireNom'),
+                            $expr->like('LOWER(s.prenom)', ':stagiairePrenom')
+                        ),
+                        $expr->andX(
+                            $expr->like('LOWER(s.nom)', ':stagiairePrenom'),
+                            $expr->like('LOWER(s.prenom)', ':stagiaireNom')
+                        )
+                    )
+                )
+                ->setParameter('stagiaireNom', $nom . "%")
+                ->setParameter('stagiairePrenom', $prenom . "%")
+                ->orderBy('a.lu', 'ASC')
+                ->getQuery()
+                ->getResult();
         }
-       }
+    }
 
     //    public function findOneBySomeField($value): ?AlerteQualite
     //    {
