@@ -18,14 +18,14 @@
 		</div>
 		<div class="tri">
 			<form action="" id="form-filter">
-			<input type="submit" value="Trouver">
+			<input type="submit" class="btn-soumettre" value="Trouver">
 				<select name="" class="liste-formation">
 				<option class="titre-de-tri-de-formation" value="" disabled selected hidden>Formation</option>
 					{% for formation in formations %}
 						<option value="{{formation.id}}">{{formation.nom}}</option>
 					{% endfor %}
 				</select>
-				<input class="champ-saisie-stagiaire primary-btn" type="text" placeholder="Stagiaire" onclick="" />
+				<input class="champ-saisie-stagiaire" type="text" placeholder="Stagiaire" onclick="" />
 			</form>
 		</div>
 		<ul class="alertes">

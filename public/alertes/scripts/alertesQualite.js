@@ -122,14 +122,23 @@ function trierParFormation(selectElement) {
 function trier(e, formation) {
     e.preventDefault();
     if (document.querySelector(".champ-saisie-stagiaire").value.split(" ").length > 3) return undefined;
-
+    let baseUrl;
+    if (!document.querySelector(".champ-saisie-stagiaire").value.length) {
+        baseUrl = window.location.origin + "/alertes/evaluation" + "/trier";
+        
+        window.location.href = baseUrl + "?formationId=" + formation + "&stagiaireNomPrenom=" + document.querySelector(".champ-saisie-stagiaire").value.length;
+        return undefined;
+    }
     let [nom, prenom] = document.querySelector(".champ-saisie-stagiaire").value.split(" ");
 
-    let baseUrl = window.location.origin + "/alertes/evaluation" + "/trier";
+    baseUrl = window.location.origin + "/alertes/evaluation" + "/trier";
     window.location.href = baseUrl + "?formationId=" + formation + "&stagiaireNomPrenom=" + nom + "%20" + prenom;
 }
 
-let formationId = false;
+let formationId = false; 
+
+
+
 
 document.getElementById("form-filter").addEventListener("submit", function (e) {
     trier(e, formationId)
