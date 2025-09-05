@@ -39,6 +39,7 @@ class Formateur extends User
     {
         $this->affectes = new ArrayCollection();
         $this->signalementStagiaires = new ArrayCollection();
+        $this->setRoles(["ROLE_FORMATEUR"]);
     }
     
     public function getNom(): ?string

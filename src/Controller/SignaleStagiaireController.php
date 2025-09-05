@@ -43,7 +43,7 @@ final class SignaleStagiaireController extends AbstractController
         $user = $this->getUser();
         if (!($user instanceof Formateur))
         {
-            return new Response("seul un formateur devrait être ici et avoir le rôle formateur", 500);
+            return new Response("seul un formateur devrait être ici et avoir le rôle formateur, contactez un administrateur", 500);
         }
         $signalement = new SignalementStagiaire();
         $form = $this->createForm(SignalementStagiaireType::class, $signalement);
@@ -51,7 +51,17 @@ final class SignaleStagiaireController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
 
-            if($stagiaire->getSession()->getAffecte())
+            $sessionCollection = $stagiaire->getSession();
+            $isInSession = false;
+            for($i=0; $i<count($sessionCollection);$i++)
+            {
+                if($sessionCollection[$i]->getAffecte()->getFormateur() == $user)
+                {
+                    $isInSession = true;
+                    break;
+                }
+            }
+            if (!$isInSession) return new Response("Le stagiaire n'est pas dans une session que vous gerez, contactez un administrateur", 500);
             $signalement = $form ->getData();
             $signalement->setFormateur($user);
             $signalement->setStagiaire($stagiaire);

@@ -37,6 +37,9 @@ class Session
     #[ORM\ManyToMany(targetEntity: Stagiaire::class, mappedBy: 'session')]
     private Collection $stagiaires;
 
+    #[ORM\OneToOne(mappedBy: 'session', cascade: ['persist', 'remove'])]
+    private ?Affecte $affecte = null;
+
     public function __construct()
     {
         $this->stagiaires = new ArrayCollection();
@@ -130,6 +133,28 @@ class Session
         if ($this->stagiaires->removeElement($stagiaire)) {
             $stagiaire->removeSession($this);
         }
+
+        return $this;
+    }
+
+    public function getAffecte(): ?Affecte
+    {
+        return $this->affecte;
+    }
+
+    public function setAffecte(?Affecte $affecte): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($affecte === null && $this->affecte !== null) {
+            $this->affecte->setSession(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($affecte !== null && $affecte->getSession() !== $this) {
+            $affecte->setSession($this);
+        }
+
+        $this->affecte = $affecte;
 
         return $this;
     }

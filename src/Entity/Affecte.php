@@ -16,11 +16,11 @@ class Affecte
     #[ORM\Column]
     private ?bool $confirmePresence = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Session $session = null;
-
     #[ORM\ManyToOne(inversedBy: 'affectes')]
     private ?Formateur $formateur = null;
+
+    #[ORM\OneToOne(inversedBy: 'affecte', cascade: ['persist', 'remove'])]
+    private ?Session $session = null;
 
     public function getId(): ?int
     {
@@ -39,18 +39,6 @@ class Affecte
         return $this;
     }
 
-    public function getSession(): ?Session
-    {
-        return $this->session;
-    }
-
-    public function setSession(?Session $session): static
-    {
-        $this->session = $session;
-
-        return $this;
-    }
-
     public function getFormateur(): ?Formateur
     {
         return $this->formateur;
@@ -59,6 +47,18 @@ class Affecte
     public function setFormateur(?Formateur $formateur): static
     {
         $this->formateur = $formateur;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): static
+    {
+        $this->session = $session;
 
         return $this;
     }

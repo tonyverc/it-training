@@ -63,10 +63,12 @@ class AppFixtures extends Fixture
         }
         $resp = new User();
         $resp->setEmail("resp@mail.com");
-        $hashedPassword = $this->userPasswordHasherInterface->hashPassword($resp, $plaintextPassword);
         $plaintextPassword = "1234";
+        $hashedPassword = $this->userPasswordHasherInterface->hashPassword($resp, $plaintextPassword);
         $resp->setPassword($hashedPassword);
-        //formation
+        $resp->setRoles(["ROLE_RESPONSABLE"]);
+        $manager->persist($resp);
+                //formation
         $formation = new Formation();
         $formation->setNom("formation");
         $formation->setFicheFormation("dgerzgre");
@@ -108,6 +110,13 @@ class AppFixtures extends Fixture
                 $manager->persist($stagiaire);
             }
         }
+        $stagiaire = new Stagiaire();
+        $stagiaire->setNom("nom");
+        $stagiaire->setPrenom("nom");
+        $stagiaire->setEmail("nom");
+        $stagiaire->setDiplome("nom");
+        $stagiaire->setPrerequisValide(false);
+        $manager->persist($stagiaire);
 
         $manager->flush();
     }
