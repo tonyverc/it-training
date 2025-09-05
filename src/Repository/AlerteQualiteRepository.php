@@ -30,7 +30,7 @@ class AlerteQualiteRepository extends ServiceEntityRepository
         ;
     }
 
-    public function getSortedByFilter($formation = null, $stagiaire = null): array
+    public function getSortedByFilter($formation, $stagiaire): array
     {
 
         $qb = $this->createQueryBuilder("a");
@@ -61,8 +61,8 @@ class AlerteQualiteRepository extends ServiceEntityRepository
                             $expr->like('LOWER(s.prenom)', ':stagiaireNom')
                         )
                     )
-                    ->setParameter('stagiaireNom', $nom . "%")
-                    ->setParameter('formation', $formation)
+                    ->setParameter('stagiaireNom', "%" .  $nom . "%")
+                    ->setParameter('formation', "%" .  $formation)
                     ->orderBy('a.lu', 'ASC')
                     ->getQuery()
                     ->getResult();
@@ -84,8 +84,8 @@ class AlerteQualiteRepository extends ServiceEntityRepository
                         )
                     )
                 )
-                ->setParameter('stagiaireNom', $nom . "%")
-                ->setParameter('stagiairePrenom', $prenom . "%")
+                ->setParameter('stagiaireNom', "%" . $nom . "%")
+                ->setParameter('stagiairePrenom',"%" .  $prenom . "%")
                 ->setParameter('formation', $formation)
                 ->orderBy('a.lu', 'ASC')
                 ->getQuery()
@@ -105,7 +105,7 @@ class AlerteQualiteRepository extends ServiceEntityRepository
                             $expr->like('LOWER(s.prenom)', ':stagiaireNom')
                         )
                     )
-                    ->setParameter('stagiaireNom', $nom . "%")
+                    ->setParameter('stagiaireNom', "%" .  $nom . "%")
                     ->orderBy('a.lu', 'ASC')
                     ->getQuery()
                     ->getResult();
@@ -126,8 +126,8 @@ class AlerteQualiteRepository extends ServiceEntityRepository
                         )
                     )
                 )
-                ->setParameter('stagiaireNom', $nom . "%")
-                ->setParameter('stagiairePrenom', $prenom . "%")
+                ->setParameter('stagiaireNom', "%" .  $nom . "%")
+                ->setParameter('stagiairePrenom', "%" .  $prenom . "%")
                 ->orderBy('a.lu', 'ASC')
                 ->getQuery()
                 ->getResult();

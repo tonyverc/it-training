@@ -86,7 +86,7 @@ document.querySelectorAll(".btn-marquer-alerte").forEach(function (element) {
     element.addEventListener("click", function (e) {
         e.preventDefault();
         element.outerHTML = `<div class="marque-lu">
-        <img src="{{ asset('imgs/path1.png') }}" alt="" width="39" height="29" />
+        <img src="imgs/path1.png" alt="" width="39" height="29" />
     </div>`;
     })
 });
@@ -125,6 +125,7 @@ function trier(e, formation) {
     let baseUrl;
     if (!document.querySelector(".champ-saisie-stagiaire").value.length) {
         baseUrl = window.location.origin + "/alertes/evaluation" + "/trier";
+
         
         window.location.href = baseUrl + "?formationId=" + formation + "&stagiaireNomPrenom=" + document.querySelector(".champ-saisie-stagiaire").value.length;
         return undefined;
@@ -135,7 +136,7 @@ function trier(e, formation) {
     window.location.href = baseUrl + "?formationId=" + formation + "&stagiaireNomPrenom=" + nom + "%20" + prenom;
 }
 
-let formationId = false; 
+let formationId = 0; 
 
 
 
@@ -143,6 +144,8 @@ let formationId = false;
 document.getElementById("form-filter").addEventListener("submit", function (e) {
     trier(e, formationId)
 })
+
+
 
 document.querySelector(".liste-formation").addEventListener("change", function (e) {
     formationId = e.target.value;

@@ -9,7 +9,6 @@
 {% set countForm = 0 %}
 
 
-
 {% block body %}
 	<div class="content-container">
 		<div class="boutons-categorie">
@@ -18,14 +17,14 @@
 		</div>
 		<div class="tri">
 			<form action="" id="form-filter">
-			<input type="submit" class="btn-soumettre" value="Trouver">
+				<input type="submit" class="btn-soumettre" value="Trouver">
 				<select name="" class="liste-formation">
-				<option class="titre-de-tri-de-formation" value="" disabled selected hidden>Formation</option>
+					<option class="titre-de-tri-de-formation" value="" disabled selected hidden>Formation</option>
 					{% for formation in formations %}
 						<option value="{{formation.id}}">{{formation.nom}}</option>
 					{% endfor %}
 				</select>
-				<input class="champ-saisie-stagiaire" type="text" placeholder="Stagiaire" onclick="" />
+				<input class="champ-saisie-stagiaire" type="text" placeholder="Stagiaire" onclick=""/>
 			</form>
 		</div>
 		<ul class="alertes">
@@ -34,7 +33,9 @@
 				<li class="alerte" id="{{alerte.id}}">
 					<div class="container-date-supprimer">
 						<p>Le
-							<time datetime="">{{alerte.date|date('d/m/Y')}} à {{alerte.date|date('H:i')}}</time>
+							<time datetime="">{{alerte.date|date('d/m/Y')}}
+								à
+								{{alerte.date|date('H:i')}}</time>
 						</p>
 						<div class="container-bouton-supprimer-alerte">
 							<button class="bouton-supprimer-alerte">
@@ -49,34 +50,36 @@
 						{{alerte.formation.nom}}</p>
 					<p class="description-alerte">{{alerte.description|raw}}</p>
 					{% if not alerte.lu %}
-                    {{ form_start(forms[loop.index0], {
+						{{ form_start(forms[loop.index0], {
     'action': path('app_marquer_comme_lu_alertes_qualite', { id: alerte.id }),
     'attr': {'onsubmit': 'marquerCommeLu(alerte.id)'}
 }) }}
-                        <input type="submit" value="Marquer comme lu" onclick="marquerCommeLu({{alerte.id}})" class="btn-marquer-alerte" onclick="">
-                        {% set countForm = countForm + 1 %}
-                    {{form_end(forms[loop.index0])}}
-                    </form>
-						
-					{% else %}
-						<div class="marque-lu">
-							<img src="{{ asset('imgs/path1.png') }}" alt="" width="39" height="29"/>
-						</div>
-					{% endif %}
-				</li>
-			{% endfor %}
+						<input type="submit" value="Marquer comme lu" onclick="marquerCommeLu({{alerte.id}})" class="btn-marquer-alerte" onclick="">
+						{% set countForm = countForm + 1 %}
+						{{form_end(forms[loop.index0])}}
+					</form>
 
-		</ul>
-	</div>
-			{{knp_pagination_render(alertes)}}
-	<div class="bgr opacity-0"></div>
-	<div class="fenetre-demande-de-supprimer hidden">
-		<p class="texte-confirmation">Êtes-vous sûr de supprimer l'alerte ?</p>
-		<div class="d-flex-jst-center">
-				<button class="bouton-acceptation-de-suppression">Oui</button>
-			<button onclick="{% set alerteid = "alerteid" %}" class="bouton-refuse-de-suppression">No</button>
-		</div>
-	</div>
+				{% else %}
+					<div class="marque-lu">
+						<img src="{{ asset('imgs/path1.png') }}" alt="" width="39" height="29"/>
+					</div>
+				{% endif %}
+			</li>
+		{% endfor %}
 
-	<script src="{{ asset("alertes/scripts/alertesQualite.js") }}"></script>
-{% endblock %}
+	</ul>
+</div>
+{{ knp_pagination_render(alertes) }}
+
+
+
+<div class="bgr opacity-0"></div>
+<div class="fenetre-demande-de-supprimer hidden">
+	<p class="texte-confirmation">Êtes-vous sûr de supprimer l'alerte ?</p>
+	<div class="d-flex-jst-center">
+		<button class="bouton-acceptation-de-suppression">Oui</button>
+		<button onclick="{% set alerteid = "alerteid" %}" class="bouton-refuse-de-suppression">No</button>
+	</div>
+</div>
+
+<script src="{{ asset("alertes/scripts/alertesQualite.js") }}"></script>{% endblock %}

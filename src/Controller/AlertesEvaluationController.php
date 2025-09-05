@@ -65,10 +65,10 @@ final class AlertesEvaluationController extends AbstractController
         return $this->json(['message' => 'Marqué comme lu', "Code status" => 200], 200);
     }
     
-    #[Route('/alertes/evaluation/trier', name: 'app_trier', methods: ["GET"], defaults: ['formationId' => false, 'stagiaireNomPrenom' => false])]
+    #[Route('/alertes/evaluation/trier', name: 'app_trier', methods: ["GET"])]
 
     public function getSortedByFilter(AlerteQualiteRepository $alerteQualiteRepository, FormationRepository $formationRepository, PaginatorInterface $paginator, Request $request): Response {
-        
+
         $alertes = $paginator->paginate($alerteQualiteRepository->getSortedByFilter($request->query->get("formationId"), $request->query->get("stagiaireNomPrenom")), $request->query->getInt("page", 1), 15);
 
         $formations = $formationRepository->findAll();
@@ -78,7 +78,6 @@ final class AlertesEvaluationController extends AbstractController
         for ($i=0; $i < count($alertes); $i++) { 
             $forms[] = $this->createForm(MarquerCommeLuType::class, $alertes[$i])->createView();
         }
-        
 
         return $this->render('alertes/alertesEvaluation/index.html.twig', [
             'alertes' => $alertes,
